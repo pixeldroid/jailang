@@ -8,7 +8,7 @@ This site attempts to form a language reference out of the hours and hours of vi
 
 Other unofficial jai summaries:
 
-- http://www.mrphilgames.com/jai/
+- https://www.mrphilgames.com/jai/
 - https://github.com/BSVino/JaiPrimer/blob/master/JaiPrimer.md
 - https://inductive.no/jai/
 

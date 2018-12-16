@@ -15,7 +15,7 @@ This site attempts to distill a language reference out of the hours and hours of
 
 Other unofficial jai summaries:
 
-- <http://www.mrphilgames.com/jai/>
+- <https://www.mrphilgames.com/jai/>
 - <https://github.com/BSVino/JaiPrimer/blob/master/JaiPrimer.md>
 - <https://inductive.no/jai/>
 
