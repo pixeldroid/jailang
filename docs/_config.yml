@@ -3,7 +3,7 @@ project:
   name: jailang
   owner: pixeldroid
   repo: https://github.com/pixeldroid/jailang
-  version: 0.0.0
+  version: 1
 collections:
   overview:
     output: true
