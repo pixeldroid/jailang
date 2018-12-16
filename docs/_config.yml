@@ -1,0 +1,33 @@
+---
+project:
+  name: jailang
+  owner: pixeldroid
+  repo: https://github.com/pixeldroid/jailang
+  version: 1
+collections:
+  overview:
+    output: true
+    permalink: "/:collection/:path/"
+    title: Overview
+    tab-order: 1
+  features:
+    output: true
+    permalink: "/:collection/:path/"
+    title: Features
+    tab-order: 2
+  examples:
+    output: true
+    permalink: "/:collection/:path/"
+    title: Examples
+    tab-order: 3
+code_indent: "  "
+highlighter: rouge
+kramdown:
+  footnote_backlink: '⮌'
+permalink: pretty
+sass:
+  style: compressed
+plugins:
+- jemoji
+- jekyll-remote-theme
+remote_theme: pixeldroid/programming-pages
