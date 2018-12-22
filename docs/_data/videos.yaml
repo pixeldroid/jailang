@@ -1,0 +1,30 @@
+##
+##  Videos referenced in the documentation
+##    MLA style format: "Title of Video." YouTube, uploaded by Username, Date, URL (without the http://).
+##    from: https://libanswers.snhu.edu/faq/48006
+##
+
+ideas_20140919:
+  mla: |-
+    “Ideas about a new programming language for games.” _YouTube_, uploaded by Jonathan Blow, Sep 19, 2014
+  url: https://youtu.be/TH9VCN6UkyQ
+
+ideas_20140926:
+  mla: |-
+    “A Programming Language for Games, talk #2.” _YouTube_, uploaded by Jonathan Blow, Sep 26, 2014
+  url: https://youtu.be/5Nc68IdNKdg
+
+demo_20141031:
+  mla: |-
+    “Demo: Base language, compile-time execution.” _YouTube_, uploaded by Jonathan Blow, Oct 31, 2014
+  url: https://youtu.be/UTqZNujQOlA
+
+reboot_2017:
+  mla: |-
+    “Reboot Develop 2017 - Jonathan Blow, Thekla Inc. / Making Game Programming Less Terrible.” _YouTube_, uploaded by Reboot Develop, May 22, 2017
+  url: https://youtu.be/De0Am_QcZiQ
+
+gamelab_2018:
+  mla: |-
+    “#Gamelab2018 - Jon Blow's Design decisions on creating Jai, a new language for game programmers.” _YouTube_, uploaded by Social Gamelab, Jul 13, 2018
+  url: https://youtu.be/uZgbKrDEzAs

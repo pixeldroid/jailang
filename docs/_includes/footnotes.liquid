@@ -1,0 +1,33 @@
+{% comment %}
+Render helper for footnotes
+
+parameters:
+  references - list of objects with the following properties:
+    label - footnote id, e.g. [^<label>]
+(1) mla - formatted reference (e.g. modern language association style)
+(1) url - internet url of reference
+    video - id of an entry in site.data.videos with the following properties:
+(2)     mla - formatted reference (e.g. modern language association style)
+(2)     url - internet url of video
+    time - (optional) skip point for video servers that support ?t=<time> (i.e. youtube, time in seconds)
+    text - footnote content
+
+note: if provided, video.mla and video.url (2) will override mla and url (1); only one or the other need be provided
+
+{% endcomment %}
+---
+
+{% for ref in include.references -%}
+{%- assign mla = ref.mla | default: '' -%}
+{%- assign url = ref.url | default: '#' -%}
+{%- assign time = '' -%}
+{%- if ref.video -%}
+  {%- assign video = site.data.videos[ref.video] -%}
+  {%- assign mla = video.mla | default: '' -%}
+  {%- assign url = video.url | default: '#' -%}
+{%- endif -%}
+{%- if mla.size > 0 %}{% assign mla = mla | append: ', ' %}{% endif -%}
+{%- if ref.time %}{% capture time %}?t={{ ref.time }}{% endcapture %}{% endif -%}
+{%- if ref.text %}{% capture text %}{{ ref.text }} <br>{% endcapture %}{% endif %}
+[^{{ ref.label }}]: {{ text }}<span>{{ mla }}<{{ url }}{{ time }}></span>{:.smaller.text}
+{%- endfor %}

@@ -1,7 +1,146 @@
 ---
 layout: page
 title: Language Features
+
+footnotes:
+ -
+    label: ast-access
+    video: reboot_2017
+    time:  2551
+    text:  data structures for all the code in the program.
+ -
+    label: build-options
+    video: reboot_2017
+    time:  1759
+    text:  you have a struct that defines the build options, and you apply those build options to the compiler workspace.
+ -
+    label: build-routine
+    video: demo_20141031
+    time:  3859
+    text:  using the `#run` directive to run a build routine at compile time.
+ -
+    label: capture-for-any-block
+    video: ideas_20140926
+    time:  3344
+    text:  i can just apply a capture to any block.
+ -
+    label: code-maturation
+    video: ideas_20140926
+    time:  2171
+    text:  your programming language should be designed to support the transition from humble beginnings to final product.
+ -
+    label: code-modification
+    video: reboot_2017
+    time:  2571
+    text:  you can modify compile-time data structures and resubmit them.
+ -
+    label: compiler-does-everything
+    video: ideas_20140919
+    time:  5166
+    text:  you shouldn't need wacky different tools on every operating system. you should need the compiler and your source code and that's all.
+ -
+    label: concurrency
+    video: ideas_20140919
+    time:  4810
+    text:  concurrency is huge. It's going to get huger for games.
+ -
+    label: directive-assert
+    video: demo_20141031
+    time:  3078
+    text:  a flavor of `#run`, allowing arbitrary code at compile time to run as part of an assertion check.
+ -
+    label: directive-check-call
+    video: demo_20141031
+    time:  2362
+    text:  |-
+        `#checkcall` invokes arbitrary user-provided checking methods at compile time.
+ -
+    label: directive-run
+    video: demo_20141031
+    time:  2701
+    text:  |-
+        `#run` directive to execute code at compile time.
+ -
+    label: directive-compile-time
+    video: demo_20141031
+    time:  5443
+    text:  boolean indication of running at compile time.
+ -
+    label: factorability-drudge
+    video: ideas_20140926
+    time:  1837
+    text:  we want to avoid meaningless syntactic changes that create drudge work as I gradually factor my program from its beginning state into its final state.
+ -
+    label: factorability-lift
+    video: ideas_20140926
+    time:  3549
+    text:  we have this whole sequence of stages we can lift a block of code on.
+ -
+    label: ffi-printf
+    video: demo_20141031
+    time:  1599
+    text:  a straight-forward foreign function interface allows things like calling out to C for `printf`.
+ -
+    label: file-path-name-line
+    video: demo_20141031
+    time:  3876
+    text:  current filepath, filename, and code line are available as directives at compile time.
+ -
+    label: introspection
+    video: reboot_2017
+    time:  1945
+    text:  introspection / reflection.
+ -
+    label: memory-memory-memory
+    video: ideas_20140919
+    time:  2296
+    text:  it's about memory and memory only.
+ -
+    label: no-exceptions
+    video: ideas_20140919
+    time:  2379
+    text:  exceptions are silly at best, and horribly damaging at worst.
+ -
+    label: no-garbage-collection
+    video: ideas_20140919
+    time:  407
+    text:  you can't build a sufficiently low-level system with sufficiently high performance characteristics in a garbage collected language.
+ -
+    label: no-header-files
+    video: ideas_20140919
+    time:  4484
+    text:  no god damn header files.
+ -
+    label: no-preprocessor
+    video: demo_20141031
+    time:  4058
+    text:  directives are part of the language; there is no preprocessor system.
+ -
+    label: no-smart-pointers
+    video: ideas_20140919
+    time:  2718
+    text:  we're not afraid of pointers in the game industry. we need to use them.
+ -
+    label: no-template-metaprogamming
+    text:  'FIXME: find this video reference'
+ -
+    label: owned-pointer
+    video: ideas_20140919
+    time:  2979
+    text:  notation to indicate memory ownership.
+ -
+    label: permissive-license
+    video: ideas_20140919
+    time:  5195
+    text:  a language we adopt should have a permissive license.
+ -
+    label: run-in-compiler
+    video: reboot_2017
+    time:  1526
+    text:  full compile-time execution.
+
 ---
+
 
 # {{ page.title }}
 
@@ -45,6 +184,7 @@ Jai will be released under a permissive license, but the details have not been s
 - `#load "file.jai";` - bring a source code file into scope
 - `#no_inline <function def>` - do not inline this function definition
 - `#run <code>` - execute `<code>` at compile time (not run time) [^directive-run]
+- `#running_at_compile_time` - boolean; `true` if execution is occuring during compile time [^directive-compile-time]
 
 
 ## Full compile-time code execution [^run-in-compiler]
@@ -135,7 +275,7 @@ struct Mesh {
 
 Code has a maturation cycle; you don't just write the final thing initially, because you don't know what it should be. You work your way there. [^code-maturation]
 
-Scalars and functions do not require meaningless syntax changes when changing scope, capturing scope [^capture-for-any-block], or switching between being named or unnamed. [^factorability1] [^factorability2]
+Scalars and functions do not require meaningless syntax changes when changing scope, capturing scope [^capture-for-any-block], or switching between being named or unnamed. [^factorability-drudge] [^factorability-lift]
 
 ```cpp
                                  { ... } // Anonymous code block
@@ -186,39 +326,5 @@ Equivalent data structures are provided for the entire text of the program (at c
 - `printf()` - calls out to C's printf [^ffi-printf]
 - OpenGL
 
----
 
-## footnotes
-
-{% capture external_link %}{% include icon.liquid id='external-link' %}{% endcapture %}
-{% capture ideas1_2014 %}Ideas about a new programming language for games{% endcapture %}
-{% capture ideas2_2014 %}A Programming Language for Games, talk #2{% endcapture %}
-{% capture demo_2014-10-31 %}Demo: Base language, compile-time execution{% endcapture %}
-{% capture reboot_2017 %}Reboot Develop 2017 - Jonathan Blow, Thekla Inc. / Making Game Programming Less Terrible{% endcapture %}
-
-[^ast-access]: data structures for all the code in the program. [_{{ reboot_2017 }}_ {{ external_link }}](https://youtu.be/De0Am_QcZiQ?t=2551)
-[^build-options]: you have a struct that definces the build options, and you apply those build options to the compiler workspace. [_{{ reboot_2017 }}_ {{ external_link }}](https://youtu.be/De0Am_QcZiQ?t=1759)
-[^build-routine]: using the `#run` directive to run a build routine at compile time. [_{{ demo_2014-10-31 }}_ {{ external_link }}](https://youtu.be/UTqZNujQOlA?t=3859)
-[^capture-for-any-block]: i can just apply a capture to any block. [_{{ ideas2_2014 }}_ {{ external_link }}](https://youtu.be/5Nc68IdNKdg?t=3344)
-[^code-maturation]: your programming language should be designed to support the transition from humble beginnings to final product. [_{{ ideas2_2014 }}_ {{ external_link }}](https://youtu.be/5Nc68IdNKdg?t=2171)
-[^code-modification]: you can modify compile-time data structures and resubmit them. [_{{ reboot_2017 }}_ {{ external_link }}](https://youtu.be/De0Am_QcZiQ?t=2571)
-[^compiler-does-everything]: you shouldn't need wacky different tools on every operating system. you should need the compiler and your source code and that's all. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=5166)
-[^concurrency]: concurrency is huge. It's going to get huger for games. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=4810)
-[^directive-assert]: a flavor of `#run`, allowing arbitrary code at compile time to run as part of an assertion check. [_{{ demo_2014-10-31 }}_ {{ external_link }}](https://youtu.be/UTqZNujQOlA?t=3078)
-[^directive-check-call]: `#checkcall` invokes arbitrary user-provided checking methods at compile time [](https://youtu.be/UTqZNujQOlA?t=2362)
-[^directive-run]: run directive to execute code at compile time. [_{{ demo_2014-10-31 }}_ {{ external_link }}](https://youtu.be/UTqZNujQOlA?t=2701)
-[^factorability1]: we want to avoid meaningless syntactic changes that create drudge work as I gradually factor my program from its beginning state into its final state. [_{{ ideas2_2014 }}_ {{ external_link }}](https://youtu.be/5Nc68IdNKdg?t=1837)
-[^factorability2]: we have this whole sequence of stages we can lift a block of code on. [_{{ ideas2_2014 }}_ {{ external_link }}](https://youtu.be/5Nc68IdNKdg?t=3549)
-[^ffi-printf]: a straight-forward foreign function interface allows things like calling out to C for `printf`. [_{{ demo_2014-10-31 }}_ {{ external_link }}](https://youtu.be/UTqZNujQOlA?t=1599)
-[^file-path-name-line]: current filepath, filename, and code line are available as directives at compile time. [_{{ demo_2014-10-31 }}_ {{ external_link }}](https://youtu.be/UTqZNujQOlA?t=3876)
-[^introspection]: introspection / reflection. [_{{ reboot_2017 }}_ {{ external_link }}](https://youtu.be/De0Am_QcZiQ?t=1945)
-[^memory-memory-memory]: it's about memory and memory only. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=2296)
-[^no-exceptions]: exceptions are silly. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=2379)
-[^no-garbage-collection]: you can't build a sufficiently low-level system with sufficiently high performance characteristics in a garbage collected language. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=407)
-[^no-header-files]: no god damn header files. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=4484)
-[^no-preprocessor]: directives are part of the language; there is no preprocessor system [_{{ demo_2014-10-31 }}_ {{ external_link }}](https://youtu.be/UTqZNujQOlA?t=4058)
-[^no-smart-pointers]: we're not afraid of pointers in the game industry. we need to use them. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=2718)
-[^no-template-metaprogamming]: xxx. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=2379)
-[^owned-pointer]: notation to indicate memory ownership. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=2979)
-[^permissive-license]: A language we adopt should have a permissive license. [_{{ ideas1_2014 }}_ {{ external_link }}](https://youtu.be/TH9VCN6UkyQ?t=5195)
-[^run-in-compiler]: full compile-time execution. [_{{ reboot_2017 }}_ {{ external_link }}](https://youtu.be/De0Am_QcZiQ?t=1526)
+{% include footnotes.liquid references=page.footnotes %}
