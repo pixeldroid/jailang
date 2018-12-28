@@ -9,7 +9,17 @@ footnotes:
     time:  2551
     text:  data structures for all the code in the program.
  -
+    label: build-example
+    video: demo_20141210
+    time:  251
+    text:  this run directive says that at compile time when this run directive is hit, we're going to run this function and anything else that needs to get compiled to make that function work.
+ -
     label: build-options
+    video: demo_20141210
+    time:  1759
+    text:  .
+ -
+    label: build-options-struct
     video: reboot_2017
     time:  1759
     text:  you have a struct that defines the build options, and you apply those build options to the compiler workspace.
@@ -54,6 +64,11 @@ footnotes:
     time:  2362
     text:  |-
         `#checkcall` invokes arbitrary user-provided checking methods at compile time.
+ -
+    label: directive-filepath
+    video: demo_20141210
+    time:  275
+    text:  a directive that tells you what the path is of the current file that is being compiled.
  -
     label: directive-run
     video: demo_20141031
@@ -177,7 +192,7 @@ Jai will be released under a permissive license, but the details have not been s
 - `#assert <expression> <message>` - static assert generates compiler error when expression evaluates to `false` [^directive-assert]
 - `#check_call <function def> <checker def>` - run a provided checking function whenever the named function is called [^directive-check-call]
 - `#file` - name of current source file [^file-path-name-line]
-- `#filepath` - path to current source file [^file-path-name-line]
+- `#filepath` - path to currently compiling source file [^directive-filepath] [^file-path-name-line]
 - `#import "Library";` - bring a library into scope
 - `#inline <function def>` - inline `<function_def>` wherever it is called
 - `#line` - line number of current statement [^file-path-name-line]
@@ -200,13 +215,22 @@ This lets you simplify your project:
 
 The Jai compiler will handle all the aspects of building an executable: compiling (in parallel), linking, etc. [^compiler-does-everything]
 
-The compiler provides an api to work with build configuration options. [^build-routine] [^build-options]
+The compiler provides an api to work with build configuration options. [^build-routine] [^build-options-struct]
 
 For example:
 
 ```cpp
 build := () {
     printf("In build (at compile time).\n");
+
+    build_options.optimization_level = Optimization_Level.DEBUG;
+    build_options.emit_line_directives = false;
+    build_options.executable_name = "traveller.jai";
+
+    update_build_options();
+
+    printf("build_options.executable_name = %s\n", build_options.executable_name);
+    printf("build_options.output_path = %s\n", build_options.output_path);
 
     printf("Building from file %s, line %d.\n", #file, #line);
     printf("filepath is: %s\n", #filepath);
@@ -216,37 +240,10 @@ build := () {
     add_build_file("misc.jai");
     add_build_file("invaders.jai");
     add_build_file("checks.jai");
+    add_build_file("levels.jai");
 }
 
 #run build();
-```
-
-or:
-
-```cpp
-setup_debug :: (w: Workspace) {
-    options := get_build_options(w); // gets Build_Options struct
-
-    options.output_executable_name = "soko_debug";
-    options.output_path = concatenate(#filepath, "../run_tree/");
-    options.backend = Backend.X64;
-
-    set_optimization_level(*options, 0, 0);
-    set_build_options(options, w);
-}
-
-start_workspace :: (name: string, proc: (w: Workspace) -> void) {
-    w := compiler_create_workspace(name); // part of jai standard library
-
-    if !w {
-        print("Workspace creation failed for '%'\n", name);
-        return;
-    }
-
-    proc(w);
-}
-
-#run start_workspace("debug", setup_debug);
 ```
 
 This also lets you re-use more code, and make build activities arbitrarily complex (code analysis, correctness checks, house rules, etc.) by using a general purpose programming language instead of various specialized build languages.

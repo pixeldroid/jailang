@@ -19,6 +19,11 @@ demo_20141031:
     “Demo: Base language, compile-time execution.” _YouTube_, uploaded by Jonathan Blow, Oct 31, 2014
   url: https://youtu.be/UTqZNujQOlA
 
+demo_20141210:
+  mla: |-
+    “Demo: Iteration and arrays, uninitialized values, enums.” _YouTube_, uploaded by Jonathan Blow, Dec 10, 2014
+  url: https://youtu.be/-UPFH0eWHEI
+
 reboot_2017:
   mla: |-
     “Reboot Develop 2017 - Jonathan Blow, Thekla Inc. / Making Game Programming Less Terrible.” _YouTube_, uploaded by Reboot Develop, May 22, 2017
