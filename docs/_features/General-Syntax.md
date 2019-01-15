@@ -1,8 +1,14 @@
 ---
 layout: page
 title: General Syntax
+order: 1
 
 footnotes:
+ -
+    label: array-declaration
+    video: demo_20141210
+    time:  1600
+    text:  .
  -
     label: basic-types
     video: demo_20141031
@@ -20,15 +26,42 @@ footnotes:
     text:  |-
         `for`.. `break`, `continue`, `return`.
  -
+    label: for-remove
+    video: demo_20141210
+    time:  2106
+    text:  |-
+        the `remove` primitive removes the current element from the array. is inherent in the loop in the way `break` or `continue` are.
+ -
     label: defer
     video: demo_20141031
     time:  1365
     text:  defer is not a macro, it is a core part of the language understood by the compiler and debugger.
  -
+    label: default-values
+    video: demo_20141211_qa
+    time:  232
+    text:  default values are always zero. the default value...is the zero value for your type.
+ -
+    label: default-value-initialization
+    video: demo_20141210
+    time:  1075
+    text:  |-
+        every single thing in the language always gets initialized to its default value, which is usually zero unless you specify a different default value. but, for performance reasons, you have the ability to say, "well, actually, let's not initialize this thing."
+ -
     label: enum-declaration
     video: demo_20141031
     time:  1058
     text:  enums are typed, can be named or anonymous, and can refer to values declared elsewhere.
+ -
+    label: enum-introspection
+    video: demo_20141210
+    time:  2684
+    text:  an enum is actually syntactic sugar for a struct that has some elements that tells you things about the enum.
+ -
+    label: enum-typing
+    video: demo_20141210
+    time:  2906
+    text:  enums are strict types, distinct from all other types declared in the program, and can be treated with strict or loose typing behavior on a per-statement basis.
  -
     label: function-declaration
     video: ideas_20140926
@@ -42,7 +75,15 @@ footnotes:
         `new` and `delete` are cleaner than c++.
  -
     label: prevent-initialization
-    text:  'FIXME: find this video reference'
+    video: demo_20141210
+    time:  1238
+    text:  |-
+        dash-dash-dash (`---`) means don't initialize this.
+ -
+    label: pointer-declaration
+    video: demo_20141210
+    time:  769
+    text:  for pointers, use Pascal-style pointy hat (`^`) instead of ampersand (`&`). still use star (`*`) to dereference a pointer.
  -
     label: scalar-declaration
     video: ideas_20140926
@@ -112,7 +153,7 @@ footnotes:
 > Use `:` to declare, `=` to assign <br>
 > `name : type = value`
 
-- `f : float;` Declares `f`, explicitly typed to `float`
+- `f : float;` Declares `f`, explicitly typed to `float` (default value is `0`)[^default-values]
 - `f : float = 1;` Declares and initializes `f`
 - `f := 1;` Declares and initializes `f`, implicitly typed
 - `f = 1;` Assigns `f`, must already be declared
@@ -120,20 +161,27 @@ footnotes:
 
 ### Pointers and Addresses
 
-> Use `*` for pointer, `!` for ownership, `&` for address
+> Use `^` for pointer, `*` for address[^pointer-declaration], `!` for ownership
 
 ```cpp
+e : Entity;
+
+pointer : ^Entity;
+pointer = *e;
+
 owned : node *! = null;
-other : node *  = &graph.node;
+other : node *  = *graph.node;
 ```
 
-### Arrays
+### Arrays [^array-declaration]
 
-> Provide size allocations in square brackets: `[3]` <br>
-> Use two periods to create a dynamically sized array: `[..]`
+> Provide static size allocations in square brackets: `[3]` <br>
+> Use two periods to create a dynamically sized array: `[..]` <br>
+> Array indices are zero-based (the first element is at index `0`). <br>
+> _see also: [Iteration](#iteration)_.
 
 ```cpp
-a: [10] int; // An array of 10 integers
+a: [10] int; // A static array of 10 integers
 b: [..] int; // A dynamic array of integers
 print("size of array: %", a.count);
 ```
@@ -148,7 +196,9 @@ Vector3 :: struct {
 }
 ```
 
-### Enums [^enum-declaration]
+### Enums
+
+Enum elements can be initialized to arbitrary values.[^enum-declaration]
 
 ```cpp
 My_Enum :: enum u16 {
@@ -160,6 +210,28 @@ My_Enum :: enum u16 {
 }
 
 MIDDLE_VALUE := 8;
+```
+
+Introspection for enums includes count, value range, and names.[^enum-introspection]
+
+```cpp
+printf("My_Enum ranges from %d to %d.\n", My_Enum.lowest_value, My_Enum.highest_value);
+printf("My_Enum has %d members:\n", My_Enum.count);
+for My_Enum.names {
+    printf("  name: %s: value: %d\n", My_Enum.names[it_index], My_Enum.values[it_index]);
+}
+```
+
+Enum values can be treated with strict or loose typing.[^enum-typing]
+
+```cpp
+x : My_Enum:strict;
+x = My_Enum.VALUE_THREE; // valid
+x = 10; // compiler error, even though 10 is a valid u16
+
+y : My_Enum:loose;
+y = 10; // valid
+y = cast(My_Enum.VALUE_THREE, My_Enum.loose);
 ```
 
 ### Functions and lambdas [^function-declaration]
@@ -207,15 +279,13 @@ some_function(arg1, arg2, x: float) -> float { return x * x; };
 
 ```cpp
 answer, error := ???;
-```
 
+```
 
 ## Initialization
 
 > variable declarations are automatically initialized to type defaults. <br>
-> initialization can be implicit (accept default), explicit (provide value), or blocked (`---`). <br>
-
-[^prevent-initialization]: []()
+> initialization can be _implicit_ (accept default), _explicit_ (provide value), or _blocked_ (`---`).[^default-value-initialization] [^prevent-initialization] <br>
 
 ```cpp
 Vector2_implicit :: struct {
@@ -233,8 +303,8 @@ Vector2_blocked :: struct {
 
 vi: Vector2_implicit;        print("% %\n", vi.x, vi.y); // "0 0"
 ve: Vector2_explicit;        print("% %\n", ve.x, ve.y); // "3 5"
-vb: Vector2_blocked;         print("% %\n", vb.x, vb.y); // compiler error?
-veb: Vector2_explicit = ---; print("% %\n", ve.x, ve.y); // compiler error?
+vb: Vector2_blocked;         print("% %\n", vb.x, vb.y); // undefined, possibly zeroes
+veb: Vector2_explicit = ---; print("% %\n", ve.x, ve.y); // undefined, possibly zeroes
 ```
 
 
@@ -242,18 +312,22 @@ veb: Vector2_explicit = ---; print("% %\n", ve.x, ve.y); // compiler error?
 
 ### for [^for-iteration] [^for-statements]
 
-`for` - supports named or implicit iterators (`it`) <br>
+`for` - supports named or implicit (`it`) iterators over ranges or arrays <br>
 `break` - exits current scope <br>
 `continue` - skips to next iteration <br>
 `return` - exits current function with value <br>
+`remove <it>` - deletes iterator from array being visited [^for-remove] <br>
 
 ```cpp
-for n: 1..count {
+for n : 1..count {
     printf("n is: %d\n", n);
 }
 
 results : int[];
-for results printf("Hey: %d\n", it);
+for r : results {
+    if r == 3 then remove r;
+}
+for results printf("results[%d] == %d\n", it_index, it);
 ```
 
 ```cpp

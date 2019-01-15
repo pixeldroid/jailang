@@ -24,6 +24,16 @@ demo_20141210:
     “Demo: Iteration and arrays, uninitialized values, enums.” _YouTube_, uploaded by Jonathan Blow, Dec 10, 2014
   url: https://youtu.be/-UPFH0eWHEI
 
+demo_20141211_qa:
+  mla: |-
+    “Q&A for Iteration and arrays, uninitialized values, enums.” _YouTube_, uploaded by Jonathan Blow, Dec 11, 2014
+  url: https://youtu.be/K45J_9jns7w
+
+demo_20150121:
+  mla: |-
+    “Data-Oriented Demo: SOA, composition.” _YouTube_, uploaded by Jonathan Blow, Jan 21, 2015
+  url: https://youtu.be/ZHqFrNyLlpA
+
 reboot_2017:
   mla: |-
     “Reboot Develop 2017 - Jonathan Blow, Thekla Inc. / Making Game Programming Less Terrible.” _YouTube_, uploaded by Reboot Develop, May 22, 2017
