@@ -7,7 +7,7 @@ title: Introduction
 
 > unofficial documentation of the jai programming language
 
-Jai is a computer programming language being developed by Jonathan Blow and team at [Thekla, Inc.][thekla-web].
+Jai is a computer programming language being developed by Jonathan Blow and team at [Thekla, Inc.][thekla-web]
 {:.larger.text}
 
 This site attempts to distill a language reference out of the hours and hours of video information presented by Jonathan Blow on his youtube channel: [A Programming Language for Games].
