@@ -15,13 +15,20 @@ collections:
     permalink: "/:collection/:path/"
     title: Features
     tab-order: 2
+  stdlib:
+    output: true
+    permalink: "/:collection/:path/"
+    title: StdLib
+    tab-order: 3
   examples:
     output: true
     permalink: "/:collection/:path/"
     title: Examples
-    tab-order: 3
+    tab-order: 4
 code_indent: "  "
 highlighter: rouge
+include:
+- "#*.md"
 kramdown:
   footnote_backlink: '⮌'
 permalink: pretty
