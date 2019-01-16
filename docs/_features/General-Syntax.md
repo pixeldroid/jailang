@@ -198,7 +198,7 @@ Vector3 :: struct {
 
 ### Enums
 
-Enum elements can be initialized to arbitrary values.[^enum-declaration]
+Enum members start at `0` by default, but can be initialized to arbitrary values.[^enum-declaration]
 
 ```cpp
 My_Enum :: enum u16 {
