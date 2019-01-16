@@ -21,6 +21,8 @@ See the following entries in the [standard library](#/stdlib) for more details:
 
 {% assign collection = site.collections | where:"title","StdLib" | first %}
 {% for d in collection.docs %}
+{% assign c1 = d.title | slice: 0 %}
+{% unless c1 == '#' %}{% continue %}{% endunless %}
 - [{{ d.title }}]({{site.baseurl}}{{d.url}}#/stdlib) - {{ d.description }}
 {% endfor %}
 
