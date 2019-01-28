@@ -70,6 +70,14 @@ def update_project_version(config_file, new_value)
   write_yaml(config_file, config)
 end
 
+def time_to_seconds(time)
+  counts = time.split(':')
+  fail('too many time components, expected 3 or fewer (h:m:s, m:s, or s)') unless counts.length <= 3
+
+  seconds = [1, 60, 3600].take(counts.length).reverse
+  accumulator = counts.map.with_index { |v,i| v.to_i * seconds[i] }
+  accumulator.reduce(:+)
+end
 
 [
   # no files to clean .. yet
@@ -133,4 +141,12 @@ task :set_version, [:v] do |t, args|
   update_project_version(project_config_file, args.v)
 
   puts "[#{t.name}] task completed, #{PROJECT} updated to #{project_version}"
+end
+
+desc [
+  "converts h:m:s or m:s to seconds for youtube time marks",
+].join("\n")
+task :time, [:t] do |t, args|
+  fail('please provide a time string as h:m:s') unless (args.t && args.t.length > 0)
+  puts "t=#{time_to_seconds(args.t)}"
 end
