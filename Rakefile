@@ -18,7 +18,7 @@ def exec_with_echo(cmd)
 end
 
 def fail(message)
-  abort("✘ #{message}")
+  abort("‼ #{message}")
 end
 
 def try(cmd, failure_message)
