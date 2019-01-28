@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'github-pages', '~> 192'
+gem 'programming-pages', '~> 0.5'
 
-gem 'bundler', '~> 1.16'
+gem 'bundler', '~> 2.0'
 gem 'rake', '~> 12.0'
