@@ -1,6 +1,7 @@
 ---
 layout: directive
 title: #run
+category: directive
 invocation: "`#run <code>`"
 description: execute `<code>` at compile time (not run time)
 see_also:

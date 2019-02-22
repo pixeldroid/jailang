@@ -10,21 +10,16 @@ collections:
     permalink: "/:collection/:path/"
     title: Overview
     tab-order: 1
-  features:
+  reference:
     output: true
     permalink: "/:collection/:path/"
-    title: Features
+    title: Reference
     tab-order: 2
-  stdlib:
-    output: true
-    permalink: "/:collection/:path/"
-    title: StdLib
-    tab-order: 3
   examples:
     output: true
     permalink: "/:collection/:path/"
     title: Examples
-    tab-order: 4
+    tab-order: 3
 code_indent: "  "
 highlighter: rouge
 include:

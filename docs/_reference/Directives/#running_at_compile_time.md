@@ -1,6 +1,7 @@
 ---
 layout: directive
 title: #running_at_compile_time
+category: directive
 invocation: "`#running_at_compile_time`"
 description: evaluate to `true` if execution is occuring during compile time
 see_also:

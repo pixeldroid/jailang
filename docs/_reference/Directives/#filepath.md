@@ -1,6 +1,7 @@
 ---
 layout: directive
 title: #filepath
+category: directive
 invocation: "`#filepath`"
 description: evaluate to the path of the currently compiling source file
 see_also:

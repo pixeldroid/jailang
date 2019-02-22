@@ -1,7 +1,8 @@
 ---
 layout: directive
 title: #check_call
-invocation: "`#check_call <function def> <checker def>`"
+category: directive
+invocation: "`#check_call <function_name> <checking_name>`"
 description: run a provided checking function whenever the named function is called
 
 footnotes:

@@ -1,6 +1,7 @@
 ---
 layout: directive
 title: #line
+category: directive
 invocation: "`#line`"
 description: evaluate to the line number of the current statement
 see_also:

@@ -1,6 +1,7 @@
 ---
 layout: directive
 title: #file
+category: directive
 invocation: "`#file`"
 description: evaluate to the name of the current source file
 see_also:

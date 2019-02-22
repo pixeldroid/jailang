@@ -1,6 +1,7 @@
 ---
 layout: directive
 title: #assert
+category: directive
 invocation: "`#assert <expression> <message>`"
 description: generate compiler error with `<message>` when `<expression>` evaluates to `false`
 see_also:

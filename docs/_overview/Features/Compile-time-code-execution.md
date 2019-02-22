@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Full compile-time code execution
+title: Compile-time code execution
 
 footnotes:
  -

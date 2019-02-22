@@ -1,8 +1,9 @@
 ---
 layout: directive
 title: #no_inline
-invocation: "`#no_inline <function def>`"
-description: prevent inlining of `<function_def>`
+category: directive
+invocation: "`#no_inline <function_name>`"
+description: prevent inlining of `<function_name>`
 see_also:
 - { text: "#inline", url: "/stdlib/%23inline/#/stdlib/" }
 

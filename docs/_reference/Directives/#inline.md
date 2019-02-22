@@ -1,8 +1,8 @@
 ---
 layout: directive
 title: #inline
-invocation: "`#inline <function def>`"
-description: inline `<function_def>` wherever it is called
+invocation: "`#inline <function_name>`"
+description: inline `<function_name>` wherever it is called
 see_also:
 - { text: "#no_inline", url: "/stdlib/%23no_inline/#/stdlib/" }
 
