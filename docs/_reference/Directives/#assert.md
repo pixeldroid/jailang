@@ -5,7 +5,7 @@ category: directive
 invocation: "`#assert <expression> <message>`"
 description: generate compiler error with `<message>` when `<expression>` evaluates to `false`
 see_also:
-- { text: "#run", url: "/stdlib/%23run/#/stdlib/" }
+- { text: "#run", url: "/reference/Directives/%23run/#/reference/" }
 
 footnotes:
 -

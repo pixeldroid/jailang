@@ -4,7 +4,7 @@ title: #inline
 invocation: "`#inline <function_name>`"
 description: inline `<function_name>` wherever it is called
 see_also:
-- { text: "#no_inline", url: "/stdlib/%23no_inline/#/stdlib/" }
+- { text: "#no_inline", url: "/reference/Directives/%23no_inline/#/stdlib/" }
 
 footnotes:
 -

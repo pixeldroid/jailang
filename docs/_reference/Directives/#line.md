@@ -5,8 +5,8 @@ category: directive
 invocation: "`#line`"
 description: evaluate to the line number of the current statement
 see_also:
-- { text: "#file", url: "/stdlib/%23file/#/stdlib/" }
-- { text: "#filepath", url: "/stdlib/%23filepath/#/stdlib/" }
+- { text: "#file", url: "/reference/Directives/%23file/#/stdlib/" }
+- { text: "#filepath", url: "/reference/Directives/%23filepath/#/stdlib/" }
 
 footnotes:
 -

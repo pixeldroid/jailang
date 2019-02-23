@@ -5,7 +5,7 @@ category: directive
 invocation: "`#running_at_compile_time`"
 description: evaluate to `true` if execution is occuring during compile time
 see_also:
-- { text: "#run", url: "/stdlib/%23run/#/stdlib/" }
+- { text: "#run", url: "/reference/Directives/%23run/#/stdlib/" }
 
 footnotes:
 -
