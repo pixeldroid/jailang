@@ -17,8 +17,16 @@ footnotes:
 Jai provides a straight-forward foreign function interface.
 {:.larger.text}
 
-- `printf()` - calls out to C's printf [^ffi-printf]
-- OpenGL
+For example, `printf()` calls out to C's printf implementation: [^ffi-printf]
+
+```c
+printf := (s: string, args: ...) -> int #foreign;
+```
+
+See the [#foreign] directive for more details.
 
 
 {% include footnotes.liquid references=page.footnotes %}
+
+
+[#foreign]: {{site.baseurl}}/reference/Directives/%23foreign/#/reference/ "the #foreign directive"
