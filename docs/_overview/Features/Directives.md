@@ -21,7 +21,7 @@ See the following entries in the [reference](#/reference) for more details:
 
 {% assign collection = site.collections | where:'title','Reference' | first %}
 {% for d in collection.docs %}
-{% unless d.layout == 'directive' %}{% continue %}{% endunless%}
+{% unless d.category == 'directive' %}{% continue %}{% endunless%}
 - [{{ d.title }}]({{site.baseurl}}{{d.url}}#/reference) - {{ d.description }}
 {% endfor %}
 

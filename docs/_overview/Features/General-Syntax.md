@@ -126,24 +126,11 @@ footnotes:
 
 ## Atomic Types [^basic-types]
 
-- `---` - uninitialized [^prevent-initialization]
-- `null` - null pointer, unequal to any pointer to any object or function
-- `void` - void pointer, maybe a temporary idea [^void-pointer-hack] {% comment %} # FIXME: is this still in? see: https://youtu.be/UTqZNujQOlA?t=1780 {% endcomment %}
-- `bool` - [`true`, `false`]
-- `int` - integer number (thirty-two bit)
-- `float` - floating point number
-- `string` - string of characters enclosed in double quotes
-- `Any` - a type that all others types can be cast to
-- `u64` - unsigned sixty-four bit integer number
-- `u32` - unsigned thirty-two bit integer number
-- `u16` - unsigned sixteen bit integer number
-- `u8` - unsigned eight bit integer number
-- `s64` - signed sixty-four bit integer number
-- `s32` - signed thirty-two bit integer number
-- `s16` - signed sixteen bit integer number
-- `s8` - signed eight bit integer number
-- `float64` - sixty-four bit floating point number
-- `float32` - thirty-two bit floating point number
+{% assign collection = site.collections | where:'title','Reference' | first %}
+{% for d in collection.docs %}
+{% unless d.category == 'type' %}{% continue %}{% endunless%}
+- [{{ d.title }}]({{site.baseurl}}{{d.url}}#/reference) - {{ d.description }}
+{% endfor %}
 
 
 ## Declarations
