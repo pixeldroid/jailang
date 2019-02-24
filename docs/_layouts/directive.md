@@ -22,6 +22,7 @@ layout: page
 {% endfor %}
 {% endif %}
 
+{{ page.content }}
 
 {% include footnotes.liquid references=page.footnotes %}
 {% endcapture %}
