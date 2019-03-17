@@ -1,0 +1,35 @@
+{%- comment -%}
+
+parameter_signature
+  generates a single parameter signature like the following:
+    ...name:package.Type<package.Type>=[]
+  parameter types are linked using module_linker.liquid
+
+params:
+  base_url="/path/to"
+  module_root="/api"
+  param: {
+    name: name
+    default_value: '[]'
+    is_var_args: true
+    type: package.Type
+    template_types: {
+      type: package.Type
+      item_types: [package.Type1, {container2}]
+    }
+  }
+
+{%- endcomment -%}
+{%- if include.param -%}
+  {%- assign p = include.param -%}
+  {%- if p.is_var_args == true -%}...{%- endif -%}<b>{{- p.name -}}</b>:
+  {%- if p.template_types -%}
+    {%- capture t -%}{% include template_signature.liquid template_type=p.template_types base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- t | rstrip -}}
+  {%- else -%}
+    {%- capture ml -%}{% include module_linker.liquid module=p.type base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- ml | rstrip -}}
+  {%- endif -%}
+  {%- if p.default_value -%}=
+    {%- assign isString = false -%}{%- if p.type == 'system.String' and p.default_value != 'null' -%}{%- assign isString = true -%}{%- endif -%}
+    {%- if isString -%}'{%- endif -%}{{ p.default_value }}{%- if isString -%}'{%- endif -%}
+  {%- endif -%}
+{%- endif -%}

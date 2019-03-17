@@ -1,0 +1,27 @@
+{%- comment -%}
+
+parameters
+  generates method parameter signatures like the following:
+    (name:package.Type, ...name:package.Type<package.Type>=[]):package.Type
+  individual parameter signatures are generated using parameter_signature.liquid
+
+params:
+  base_url="/path/to"
+  module_root="/api"
+  params: [
+    {
+      name: name
+      default_value: '[]'
+      is_var_args: true
+      type: package.Type
+      template_types: [package.Type1, package.Type2]
+    }
+  ]
+
+{%- endcomment -%}
+({%- if include.params -%}
+  {%- for p in include.params -%}
+    {%- capture p_sig -%}{% include parameter_signature.liquid param=p base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- p_sig | rstrip -}}
+    {% unless forloop.last %}, {% endunless %}
+  {%- endfor -%}
+{%- endif -%})

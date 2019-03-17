@@ -1,0 +1,69 @@
+{%- comment -%}
+
+module_linker
+  turns foo.bar.Baz#bat into:
+  <a href="/path/to/api/foo/bar/Baz#bat">Baz#bat</a>
+  or, if full_linkage is set:
+  <a href="/path/to/api/foo/">foo</a>.<a href="/path/to/api/foo/bar">bar</a>.<a href="/path/to/api/foo/bar/Baz">Baz</a>#<a href="/path/to/api/foo/bar/Baz#bat">bat</a>
+
+  downcases pseudotype `system.Void` to `void` keyword
+
+params:
+  module="foo.bar.Baz#bat" (fully qualified Type name, optionally with method/property/field name after '#')
+  base_module="foo.bar.Baz" (when equal to module and fragment present, only fragment is rendered)
+  base_url="/path/to" (may be empty string when running locally)
+  module_root="/api" (should include leading slash)
+  html_class="section" (optional, defaults to null: no class applied)
+  markdown='false' (optional, defaults to false: html style links)
+  full_linkage='false' (optional, defaults to false: just the Type is shown, without ancestor packages)
+
+{%- endcomment -%}
+{%- assign modules = include.module | split: '.' -%}
+{%- assign u = include.module_root -%}
+{%- assign lt = '<' -%}
+{%- assign gt = '>' -%}
+{%- assign has_fragment = false -%}
+{%- assign is_base_module = false -%}
+
+{%- if include.base_module and include.module.size > include.base_module.size %}
+  {%- assign s = include.module | slice: 0, include.base_module.size -%}
+  {%- if s == include.base_module -%}
+    {%- assign is_base_module = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- for m in modules -%}
+  {%- assign f1 = m -%}
+  {%- assign f2 = '' -%}
+
+  {%- if forloop.last -%}
+    {%- assign parts = m | split: '#' -%}
+    {%- if parts.size == 2 -%}
+      {%- assign has_fragment = true -%}
+      {%- assign f1 = parts.first -%}
+      {%- assign f2 = parts.last -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign n = f1 -%}
+  {%- assign u = u | append: '/' | append: f1 -%}
+
+  {%- if include.full_linkage == 'true' or forloop.last -%}
+    {%- capture has_url -%}{% include module_has_link.liquid module_url=u %}{%- endcapture -%}{%- assign has_url = has_url | rstrip -%}
+
+    {%- if has_url == 'true' -%}
+      {%- unless is_base_module -%}
+        {%- if include.markdown == 'true' -%}[{{ n }}]({{ include.base_url | append: u }})
+        {%- else -%}{{ lt }}a{% if include.html_class %} class="{{ include.html_class }}"{% endif %} href="{{ include.base_url | append: u }}"{{ gt }}{{ n }}{{ lt }}/a{{ gt }}
+        {%- endif -%}
+      {%- endunless -%}
+      {%- if has_fragment -%}
+        {%- if include.markdown == 'true' -%}#[{{ f2 }}]({{ include.base_url | append: u | append: '#' | append: 'details-' | append: f2 }})
+        {%- else -%}#{{ lt }}a{% if include.html_class %} class="{{ include.html_class }}"{% endif %} href="{{ include.base_url | append: u | append: '#' | append: 'details-' | append: f2 }}"{{ gt }}{{ f2 }}{{ lt }}/a{{ gt }}
+        {%- endif -%}
+      {%- endif -%}
+    {%- else -%}{{ n }}{%- endif -%}
+
+    {%- unless forloop.last -%}.{%- endunless -%}
+  {%- endif -%}
+{%- endfor -%}
