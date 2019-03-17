@@ -15,11 +15,16 @@ collections:
     permalink: "/:collection/:path/"
     title: Reference
     tab-order: 2
+  modules:
+    output: true
+    permalink: "/:collection/:path/"
+    title: Modules
+    tab-order: 3
   examples:
     output: true
     permalink: "/:collection/:path/"
     title: Examples
-    tab-order: 3
+    tab-order: 4
 code_indent: "  "
 highlighter: rouge
 include:
@@ -32,4 +37,5 @@ sass:
 plugins:
 - jemoji
 - jekyll-remote-theme
+#theme: programming-pages
 remote_theme: pixeldroid/programming-pages
