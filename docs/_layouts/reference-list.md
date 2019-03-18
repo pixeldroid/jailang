@@ -15,12 +15,12 @@ layout: page
   {% assign prefix = child | truncate: parent.size, '' %}
   {% unless prefix == parent %}{% assign listable = false %}{% endunless %}
   {% if listable %}
-  <div class="item">
+  <a class="item" href="{{ site.baseurl }}{{ doc.url }}#/{{ doc.collection | downcase }}/">
     <div class="content">
-      <a class="medium header" href="{{ site.baseurl }}{{ doc.url }}#/{{ doc.collection | downcase }}/">{{ doc.title }}</a>
+      <div class="medium header">{{ doc.title }}</div>
       <div class="description">{{ doc.description | newline_to_br | split: '<br />' | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</div>
     </div>
-  </div>
+  </a>
   {% endif %}
 {% endfor %}
 </div>
