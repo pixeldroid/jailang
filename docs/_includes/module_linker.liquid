@@ -6,8 +6,6 @@ module_linker
   or, if full_linkage is set:
   <a href="/path/to/api/foo/">foo</a>.<a href="/path/to/api/foo/bar">bar</a>.<a href="/path/to/api/foo/bar/Baz">Baz</a>#<a href="/path/to/api/foo/bar/Baz#bat">bat</a>
 
-  downcases pseudotype `system.Void` to `void` keyword
-
 params:
   module="foo.bar.Baz#bat" (fully qualified Type name, optionally with method/property/field name after '#')
   base_module="foo.bar.Baz" (when equal to module and fragment present, only fragment is rendered)

@@ -3,7 +3,7 @@
 see_also
   creates an unordered list of linked module references, one for each @see tag provided:
 
-  <h3 class="ui tight sub header">See Also</h3>
+  <h3 class="ui grey tight sub header">See Also</h3>
   <ul>
   <li>#<a href="/api/example/ExampleClass#details-kitchen_sink_method">kitchen_sink_method</a></li>
   <li><a href="/api/example">example</a>.<a href="/api/example/ExampleSuperClass">ExampleSuperClass</a>#<a href="/api/example/ExampleSuperClass#details-constructor">constructor</a></li>
@@ -17,6 +17,7 @@ params:
   ] (array of tag objects; those with name not equal to 'see' are ignored)
   base_module="foo.bar.Baz" (base module used for relative links: "value"=>"#bat")
   heading=3 (optional, defaults to 3: html h3 heading is used for 'See Also' section.)
+  heading_class="ui grey tight sub header" (optional, defaults to "ui grey tight sub header")
   module_root="/api" (should include leading slash)
 
 {%- endcomment -%}
@@ -24,16 +25,17 @@ params:
 {%- assign see_also = include.tags | where:'name','see' -%}
 {%- if see_also.size > 0 -%}
 {%- assign h = include.heading | default: 3 -%}
-<h{{ h }} class="ui grey sub header">See Also</h{{ h }}>
+{%- assign hc = include.heading_class | default: "ui grey tight sub header" -%}
+<h{{ h }} class="{{ hc }}">See Also</h{{ h }}>
 <ul>
 {% assign see_also = see_also | sort: 'value' -%}
 {% for tag in see_also %}
 {% assign li_data = '' %}
 {% assign not_url = tag.value | split: 'http' | first %}{%- comment -%}if value does start with 'http', not_url will be nil{%- endcomment -%}
 {% if not_url %}
-  {%- assign l = 'true' -%}
-  {%- assign m = tag.value -%}
-  {%- assign c = m | slice: 0 -%}
+  {%- assign l = 'true' -%}      {% comment %}full linkage?{% endcomment %}
+  {%- assign m = tag.value -%}   {% comment %}link target{% endcomment %}
+  {%- assign c = m | slice: 0 -%}{% comment %}first character of target{% endcomment %}
   {%- if c == '#' %}
     {%- assign l = 'false' -%}
     {%- assign m = include.base_module | append: m -%}

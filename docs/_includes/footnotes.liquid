@@ -2,6 +2,8 @@
 Render helper for footnotes
 
 parameters:
+  no_hr - when 'true', prevents addition of horizontal rule
+  reflist_only - when 'true', creates an unordered list of reference paragraphs (no footnotes)
   references - list of objects with the following properties:
     label - footnote id, e.g. [^<label>]
 (1) mla - formatted reference (e.g. modern language association style)
@@ -15,9 +17,11 @@ parameters:
 note: if provided, video.mla and video.url (2) will override mla and url (1); only one or the other need be provided
 
 {% endcomment %}
+{%- unless include.no_hr == 'true' %}
 ---
 
-{% for ref in include.references -%}
+{% endunless -%}
+{%- for ref in include.references -%}
 {%- assign mla = ref.mla | default: '' -%}
 {%- assign url = ref.url | default: '#' -%}
 {%- assign time = '' -%}
@@ -28,6 +32,7 @@ note: if provided, video.mla and video.url (2) will override mla and url (1); on
 {%- endif -%}
 {%- if mla.size > 0 %}{% assign mla = mla | append: ', ' %}{% endif -%}
 {%- if ref.time %}{% capture time %}?t={{ ref.time }}{% endcapture %}{% endif -%}
-{%- if ref.text %}{% capture text %}{{ ref.text }} <br>{% endcapture %}{% endif %}
-[^{{ ref.label }}]: {{ text }}<span>{{ mla }}<{{ url }}{{ time }}></span>{:.smaller.text}
+{%- if ref.text %}{% capture text %}{{ ref.text }} <br>{% endcapture %}{% endif -%}
+{%- capture prefix %}[^{{ ref.label }}]: {% endcapture %}{% if include.reflist_only == 'true' %}{% assign prefix = '- ' %}{% endif %}
+{{ prefix }}{{ text }}<span>{{ mla }}<{{ url }}{{ time }}></span>{:.smaller.text}
 {%- endfor %}
