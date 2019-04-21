@@ -7,15 +7,45 @@ module_linker
   <a href="/path/to/api/foo/">foo</a>.<a href="/path/to/api/foo/bar">bar</a>.<a href="/path/to/api/foo/bar/Baz">Baz</a>#<a href="/path/to/api/foo/bar/Baz#bat">bat</a>
 
 params:
-  module="foo.bar.Baz#bat" (fully qualified Type name, optionally with method/property/field name after '#')
-  base_module="foo.bar.Baz" (when equal to module and fragment present, only fragment is rendered)
   base_url="/path/to" (may be empty string when running locally)
   module_root="/api" (should include leading slash)
+  base_module="foo.bar.Baz" (when equal to module and fragment present, only fragment is rendered)
+  module="foo.bar.Baz#bat" (fully qualified Type name, optionally with method/property/field name after '#')
   html_class="section" (optional, defaults to null: no class applied)
   markdown='false' (optional, defaults to false: html style links)
   full_linkage='false' (optional, defaults to false: just the Type is shown, without ancestor packages)
 
 {%- endcomment -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __valid_chars = valid_chars -%}
+{%- assign __first_char = first_char -%}
+
+{%- comment -%}first, check that type is linkable{%- endcomment -%}
+{%- assign valid_chars = '#_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' -%}
+{%- assign first_char = include.module | slice: 0 -%}
+{%- unless valid_chars contains first_char %}{{ include.module }}{% capture log_msg %}[module_linker.liquid] invalid start character: ({{ first_char }}), cannot link module ({{ include.module }}){% endcapture %}{% include log.liquid lvl='warn' msg=log_msg %}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign valid_chars = __valid_chars -%}
+{%- assign first_char = __first_char -%}
+
+{%- else -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __modules = modules -%}
+{%- assign __u = u -%}
+{%- assign __lt = lt -%}
+{%- assign __gt = gt -%}
+{%- assign __has_fragment = has_fragment -%}
+{%- assign __is_base_module = is_base_module -%}
+{%- assign __s = s -%}
+{%- assign __f1 = f1 -%}
+{%- assign __f2 = f2 -%}
+{%- assign __parts = parts -%}
+{%- assign __n = n -%}
+{%- assign __has_url = has_url -%}
+
 {%- assign modules = include.module | split: '.' -%}
 {%- assign u = include.module_root -%}
 {%- assign lt = '<' -%}
@@ -65,3 +95,19 @@ params:
     {%- unless forloop.last -%}.{%- endunless -%}
   {%- endif -%}
 {%- endfor -%}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign has_url = __has_url -%}
+{%- assign n = __n -%}
+{%- assign parts = __parts -%}
+{%- assign f2 = __f2 -%}
+{%- assign f1 = __f1 -%}
+{%- assign s = __s -%}
+{%- assign is_base_module = __is_base_module -%}
+{%- assign has_fragment = __has_fragment -%}
+{%- assign gt = __gt -%}
+{%- assign lt = __lt -%}
+{%- assign u = __u -%}
+{%- assign modules = __modules -%}
+
+{%- endunless -%}

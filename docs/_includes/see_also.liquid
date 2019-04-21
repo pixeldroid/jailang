@@ -16,19 +16,30 @@ params:
     {"name"=>"see", "value"=>"https://foo.bar.baz"}
   ] (array of tag objects; those with name not equal to 'see' are ignored)
   base_module="foo.bar.Baz" (base module used for relative links: "value"=>"#bat")
-  heading=3 (optional, defaults to 3: html h3 heading is used for 'See Also' section.)
+  heading=3 (optional, defaults to 3: html heading used for 'See Also' section.)
   heading_class="ui grey tight sub header" (optional, defaults to "ui grey tight sub header")
   module_root="/api" (should include leading slash)
 
 {%- endcomment -%}
 {%- if include.tags -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __see_also = see_also -%}
+{%- assign __h = h -%}
+{%- assign __hc = hc -%}
+{%- assign __li_data = li_data -%}
+{%- assign __not_url = not_url -%}
+{%- assign __l = l -%}
+{%- assign __m = m -%}
+{%- assign __c = c -%}
+
+{%- comment -%}procedure{%- endcomment -%}
 {%- assign see_also = include.tags | where:'name','see' -%}
 {%- if see_also.size > 0 -%}
 {%- assign h = include.heading | default: 3 -%}
 {%- assign hc = include.heading_class | default: "ui grey tight sub header" -%}
 <h{{ h }} class="{{ hc }}">See Also</h{{ h }}>
 <ul>
-{% assign see_also = see_also | sort: 'value' -%}
 {% for tag in see_also %}
 {% assign li_data = '' %}
 {% assign not_url = tag.value | split: 'http' | first %}{%- comment -%}if value does start with 'http', not_url will be nil{%- endcomment -%}
@@ -40,7 +51,7 @@ params:
     {%- assign l = 'false' -%}
     {%- assign m = include.base_module | append: m -%}
   {%- endif -%}
-  {% capture li_data %}{% include module_linker.liquid full_linkage=l base_module=include.base_module module=m base_url=site.baseurl module_root=include.module_root %}{% endcapture %}
+  {% capture li_data %}{% include module_linker.liquid full_linkage=l base_url=site.baseurl module_root=include.module_root base_module=include.base_module module=m %}{% endcapture %}
 {% else %}
   {% capture li_data %}<a href="{{ tag.value }}">{{ tag.value }}</a>{% endcapture %}
 {% endif %}
@@ -48,4 +59,15 @@ params:
 {% endfor %}
 </ul>
 {%- endif -%}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign c = __c -%}
+{%- assign m = __m -%}
+{%- assign l = __l -%}
+{%- assign not_url = __not_url -%}
+{%- assign li_data = __li_data -%}
+{%- assign hc = __hc -%}
+{%- assign h = __h -%}
+{%- assign see_also = __see_also -%}
+
 {%- endif -%}

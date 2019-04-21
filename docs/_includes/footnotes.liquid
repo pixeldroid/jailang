@@ -21,6 +21,15 @@ note: if provided, video.mla and video.url (2) will override mla and url (1); on
 ---
 
 {% endunless -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __mla = mla -%}
+{%- assign __url = url -%}
+{%- assign __time = time -%}
+{%- assign __video = video -%}
+{%- assign __text = text -%}
+{%- assign __prefix = prefix -%}
+
 {%- for ref in include.references -%}
 {%- assign mla = ref.mla | default: '' -%}
 {%- assign url = ref.url | default: '#' -%}
@@ -36,3 +45,11 @@ note: if provided, video.mla and video.url (2) will override mla and url (1); on
 {%- capture prefix %}[^{{ ref.label }}]: {% endcapture %}{% if include.reflist_only == 'true' %}{% assign prefix = '- ' %}{% endif %}
 {{ prefix }}{{ text }}<span>{{ mla }}<{{ url }}{{ time }}></span>{:.smaller.text}
 {%- endfor %}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign prefix = __prefix -%}
+{%- assign text = __text -%}
+{%- assign video = __video -%}
+{%- assign time = __time -%}
+{%- assign url = __url -%}
+{%- assign mla = __mla -%}

@@ -13,23 +13,27 @@ params:
     default_value: '[]'
     is_var_args: true
     type: package.Type
-    template_types: {
-      type: package.Type
-      item_types: [package.Type1, {container2}]
-    }
   }
 
 {%- endcomment -%}
 {%- if include.param -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __p = p -%}
+{%- assign __ml = ml -%}
+{%- assign __isString = isString -%}
+
   {%- assign p = include.param -%}
   {%- if p.is_var_args == true -%}...{%- endif -%}<b>{{- p.name -}}</b>:
-  {%- if p.template_types -%}
-    {%- capture t -%}{% include template_signature.liquid template_type=p.template_types base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- t | rstrip -}}
-  {%- else -%}
-    {%- capture ml -%}{% include module_linker.liquid module=p.type base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- ml | rstrip -}}
-  {%- endif -%}
+  {%- capture ml -%}{% include module_linker.liquid module=p.type base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- ml | rstrip -}}
   {%- if p.default_value -%}=
-    {%- assign isString = false -%}{%- if p.type == 'system.String' and p.default_value != 'null' -%}{%- assign isString = true -%}{%- endif -%}
-    {%- if isString -%}'{%- endif -%}{{ p.default_value }}{%- if isString -%}'{%- endif -%}
+    {%- assign isString = false -%}{%- if p.type == 'string' and p.default_value != 'null' -%}{%- assign isString = true -%}{%- endif -%}
+    {%- if isString -%}"{%- endif -%}{{ p.default_value }}{%- if isString -%}"{%- endif -%}
   {%- endif -%}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign isString = __isString -%}
+{%- assign ml = __ml -%}
+{%- assign p = __p -%}
+
 {%- endif -%}

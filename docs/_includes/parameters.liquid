@@ -20,8 +20,16 @@ params:
 
 {%- endcomment -%}
 ({%- if include.params -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __p_sig = p_sig -%}
+
   {%- for p in include.params -%}
     {%- capture p_sig -%}{% include parameter_signature.liquid param=p base_url=include.base_url module_root=include.module_root %}{%- endcapture -%}{{- p_sig | rstrip -}}
     {% unless forloop.last %}, {% endunless %}
   {%- endfor -%}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign p_sig = __p_sig -%}
+
 {%- endif -%})

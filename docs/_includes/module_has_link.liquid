@@ -11,6 +11,15 @@ returns:
   'false' when no document can be found
 
 {%- endcomment -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __u = u -%}
+{%- assign __found = found -%}
+{%- assign __url_pieces = url_pieces -%}
+{%- assign __api_collection = api_collection -%}
+{%- assign __api_docs = api_docs -%}
+{%- assign __u1 = u1 -%}
+
 {%- assign u = include.module_url -%}
 {%- assign found = false -%}
 {%- assign url_pieces = u | split: '/' -%}
@@ -29,3 +38,11 @@ returns:
   {%- endif -%}
 {%- endfor -%}
 {%- if found -%}true{%- else -%}false{%- endif -%}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign u1 = __u1 -%}
+{%- assign api_docs = __api_docs -%}
+{%- assign api_collection = __api_collection -%}
+{%- assign url_pieces = __url_pieces -%}
+{%- assign found = __found -%}
+{%- assign u = __u -%}
