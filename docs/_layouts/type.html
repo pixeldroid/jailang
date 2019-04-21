@@ -57,8 +57,9 @@ layout: page
 <h3 id="description" class="ui header">{{ page.type | capitalize }} Description</h3>
 {% capture description %}{{ page.description }}{% endcapture %}
 {{ description | replace: '   ⇥', '⇥' | replace: '⇥', site.code_indent | markdownify }}
-{% assign base_module = page.module | append: '.' | append: page.title %}
-{% include see_also.liquid base_module=base_module tags=page.tags heading=3 module_root=module_root %}
+{% assign base_module_composite = page.module | append: '.' | append: page.title %}
+
+{% if page.tags %}{% include see_also.liquid module_root=module_root base_module=base_module_composite tags=page.tags heading=3 %}{% endif %}
 
 
 <h2 id="listing" class="ui dividing header">Listing</h2>
@@ -75,6 +76,7 @@ layout: page
 {% if page[c] %}
 <h3 id="listing-{{ c }}" class="ui tight header">{{ c | capitalize }}</h3>
 {% assign list = page[c] %}
+
 <table class="ui striped definition table"><tbody>
 {% for item in list %}
   {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
@@ -106,7 +108,7 @@ layout: page
   <pre class="highlight"><code>{{ signature }}</code></pre>
   {{ item.description | markdownify }}
 
-  {% if item.tags %}{% capture see_also %}{% include see_also.liquid tags=item.tags base_module=page.module module_root=module_root %}{% endcapture %}{{ see_also }}{% endif %}
+  {% if item.tags %}{% capture see_also %}{% include see_also.liquid module_root=module_root base_module=page.module tags=item.tags %}{% endcapture %}{{ see_also }}{% endif %}
   {% if item.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=item.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
   </div>
 {% endfor %}

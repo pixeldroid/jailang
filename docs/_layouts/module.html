@@ -32,7 +32,7 @@ layout: page
   {% capture foreign %}{% if item.is_foreign %}<div class="ui horizontal grey label">foreign</div>{% endif %}{% endcapture %}
   {% capture href %}{% if is_type %}{{ page_module_url }}/{{ item.name }}/#{{ module_root }}/{% else %}#details-{{ item.name }}{% endif %}{% endcapture %}
   {% assign d_lines = item.description | newline_to_br | split: '<br />' %}
-  <tr><td{% if forloop.first %} class="collapsing"{% endif %}><a href="{{ href }}">{{ item.name }}{% if is_proc %}(){% endif %}</a></td><td>{{ deprecated }}{{ foreign }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td></tr>
+  <tr><td{% if forloop.first %} class="collapsing"{% endif %}><a {% if is_type %}id="details-{{ item.name }}"{% endif %} href="{{ href }}">{{ item.name }}{% if is_proc %}(){% endif %}</a></td><td>{{ deprecated }}{{ foreign }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
@@ -71,12 +71,12 @@ layout: page
   <pre class="highlight"><code>{{ signature }}</code></pre>
   {{ item.description | markdownify }}
 
-  {% if item.tags %}{% capture see_also %}{% include see_also.liquid tags=item.tags base_module=page.module module_root=module_root %}{% endcapture %}{{ see_also }}{% endif %}
+  {% if item.tags %}{% capture see_also %}{% include see_also.liquid module_root=module_root base_module=base_module tags=item.tags %}{% endcapture %}{{ see_also }}{% endif %}
   {% if item.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=item.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
 
   {% if is_proc and item.parameters and item.parameters.size > 0 %}
   <table class="ui striped definition table"><tbody>
-  {% for p in item.parameters %} {% comment %} FIXME: parameter_signature {% endcomment %}
+  {% for p in item.parameters %}
     {% capture p_sig %}{% include parameter_signature.liquid param=p base_url=include.base_url %}{% endcapture %}
     {% capture optional %}{% if p.default_value or p.is_var_args %}<div class="ui horizontal label">optional</div>&nbsp;{% endif %}{% endcapture %}
     <tr><td class="collapsing"><code>{{ p_sig | rstrip }}</code></td><td>{{ optional }}{% if p.description %}{{ p.description | markdownify | remove: '<p>' | remove: '</p>' }}{% endif %}</td></tr>
