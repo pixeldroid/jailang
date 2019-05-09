@@ -32,7 +32,7 @@ layout: page
   {% capture foreign %}{% if item.is_foreign %}<div class="ui horizontal grey label">foreign</div>{% endif %}{% endcapture %}
   {% capture href %}{% if is_type %}{{ page_module_url }}/{{ item.name }}/#{{ module_root }}/{% else %}#details-{{ item.name }}{% endif %}{% endcapture %}
   {% assign d_lines = item.description | newline_to_br | split: '<br />' %}
-  <tr><td{% if forloop.first %} class="collapsing"{% endif %}><a {% if is_type %}id="details-{{ item.name }}"{% endif %} href="{{ href }}">{{ item.name }}{% if is_proc %}(){% endif %}</a></td><td>{{ deprecated }}{{ foreign }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td></tr>
+  <tr><td{% if forloop.first %} class="collapsing"{% endif %}><a href="{{ href }}"><span {% if is_type %}id="details-{{ item.name }}"{% endif %}>{{ item.name }}{% if is_proc %}(){% endif %}</span></a></td><td>{{ deprecated }}{{ foreign }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
