@@ -60,6 +60,7 @@ layout: page
 {% assign base_module_composite = page.module | append: '.' | append: page.title %}
 
 {% if page.tags %}{% include see_also.liquid module_root=module_root base_module=base_module_composite tags=page.tags heading=3 %}{% endif %}
+{% if page.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=page.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
 
 
 <h2 id="listing" class="ui dividing header">Listing</h2>
@@ -82,7 +83,14 @@ layout: page
   {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
   {% capture href %}#details-{{ item.name }}{% endcapture %}
   {% assign d_lines = item.description | newline_to_br | split: '<br />' %}
-  <tr><td{% if forloop.first %} class="collapsing"{% endif %}><a href="{{ href }}">{{ item.name }}</a></td><td>{{ deprecated }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td></tr>
+  {% assign value = '' %}
+  {% if c == "fields" %}{% assign value = item.default_value %}{% endif %}
+  {% if c == "constants" %}{% assign value = item.value %}{% endif %}
+  <tr>
+    <td{% if forloop.first %} class="collapsing"{% endif %}><a href="{{ href }}">{{ item.name }}</a></td>
+    <td{% if forloop.first %} class="collapsing"{% endif %}>{% if value.size > 0 %}<code>{{ value }}</code>{% endif %}</td>
+    <td>{{ deprecated }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td>
+  </tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
@@ -98,7 +106,7 @@ layout: page
 {% for item in list %}
   {% assign signature = item.name %}
   {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
-  {% if c == "fields" %}{% capture signature %}{{ item.name }} : {{ item.type }};{% endcapture %}{% endif %}
+  {% if c == "fields" %}{% capture signature %}{{ item.name }} : {{ item.type }}{% if item.default_value %} = {{ item.default_value }}{% endif %};{% endcapture %}{% endif %}
   {% if c == "constants" %}{% capture signature %}{{ item.name }} : {{ item.type }} : {{ item.value }};{% endcapture %}{% endif %}
 
   <div class="details">

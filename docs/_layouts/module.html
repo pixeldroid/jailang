@@ -10,6 +10,12 @@ layout: page
 
 <h1 class="ui dividing header">{{ page.module }}</h1>
 
+{% if page.description and page.description.size > 0 %}
+<p class="larger text">
+{{ page.description | newline_to_br }}
+</p>
+{% endif %}
+
 <h2 id="listing" class="ui dividing header">Listing</h2>
 
 <div class="ui horizontal divided list">
@@ -28,7 +34,7 @@ layout: page
 {% assign list = page[c] %}
 <table class="ui striped definition table"><tbody>
 {% for item in list %}
-  {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
+  {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags and d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
   {% capture foreign %}{% if item.is_foreign %}<div class="ui horizontal grey label">foreign</div>{% endif %}{% endcapture %}
   {% capture href %}{% if is_type %}{{ page_module_url }}/{{ item.name }}/#{{ module_root }}/{% else %}#details-{{ item.name }}{% endif %}{% endcapture %}
   {% assign d_lines = item.description | newline_to_br | split: '<br />' %}
@@ -70,6 +76,10 @@ layout: page
 
   <pre class="highlight"><code>{{ signature }}</code></pre>
   {{ item.description | markdownify }}
+
+  {% if item.examples %}{% for e in item.examples %}
+    {% capture example %}{% include collapsible_example.liquid file=e %}{% endcapture %}{{ example }}
+  {% endfor %}{% endif %}
 
   {% if item.tags %}{% capture see_also %}{% include see_also.liquid module_root=module_root base_module=base_module tags=item.tags %}{% endcapture %}{{ see_also }}{% endif %}
   {% if item.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=item.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
