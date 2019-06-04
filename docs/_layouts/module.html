@@ -1,0 +1,108 @@
+---
+layout: page
+---
+
+{% assign page_url_pieces = page.url | split: '/' %}
+{% assign module_root = page_url_pieces[1] | prepend: '/' %}
+{% capture module_url %}{{ site.baseurl }}{{ module_root }}{% endcapture %}
+{% capture page_module_url %}{{ module_url }}/{{ page.module | split: '.' | join: '/' }}{% endcapture %}
+{% assign constructs = "constants|fields|procedures|enums|structs" | split: '|'  %}
+
+<h1 class="ui dividing header">{{ page.module }}</h1>
+
+{% if page.description and page.description.size > 0 %}
+<p class="larger text">
+{{ page.description | newline_to_br }}
+</p>
+{% endif %}
+
+<h2 id="listing" class="ui dividing header">Listing</h2>
+
+<div class="ui horizontal divided list">
+{% for c in constructs %}
+  {% if page[c] %}
+  <div class="item"><a class="header" href="#listing-{{ c }}">{{ c }}</a></div>
+  {% endif %}
+{% endfor %}
+</div>
+
+{% for c in constructs %}
+{% assign is_proc = false %}{% if c == 'procedures' %}{% assign is_proc = true %}{% endif %}
+{% assign is_type = false %}{% if c == 'enums' or c == 'structs' %}{% assign is_type = true %}{% endif %}
+{% if page[c] %}
+<h3 id="listing-{{ c }}" class="ui tight header">{{ c | capitalize }}</h3>
+{% assign list = page[c] %}
+<table class="ui striped definition table"><tbody>
+{% for item in list %}
+  {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags and d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
+  {% capture foreign %}{% if item.is_foreign %}<div class="ui horizontal grey label">foreign</div>{% endif %}{% endcapture %}
+  {% capture href %}{% if is_type %}{{ page_module_url }}/{{ item.name }}/#{{ module_root }}/{% else %}#details-{{ item.name }}{% endif %}{% endcapture %}
+  {% assign d_lines = item.description | newline_to_br | split: '<br />' %}
+  <tr><td{% if forloop.first %} class="collapsing"{% endif %}><a href="{{ href }}"><span {% if is_type %}id="details-{{ item.name }}"{% endif %}>{{ item.name }}{% if is_proc %}(){% endif %}</span></a></td><td>{{ deprecated }}{{ foreign }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+{% endfor %}
+
+
+<h2 id="details" class="ui dividing header">Details</h2>
+
+{% for c in constructs %}
+{% assign is_proc = false %}{% if c == 'procedures' %}{% assign is_proc = true %}{% endif %}
+{% assign is_type = false %}{% if c == 'enums' or c == 'structs' %}{% assign is_type = true %}{% endif %}
+
+{% if is_type %}{% continue %}{% endif %}{% comment %}type details are in their own pages{% endcomment %}
+
+{% if page[c] %}
+<h3 id="details-{{ c }}" class="ui tight header">{{ c | capitalize }}</h3>
+{% assign list = page[c] %}
+{% for item in list %}
+  {% assign signature = item.name %}
+  {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
+  {% capture foreign %}{% if item.is_foreign %}<div class="ui horizontal grey label">foreign</div>{% endif %}{% endcapture %}
+  {% if c == "fields" %}{% capture signature %}{{ item.name }} : {{ item.type }};{% endcapture %}{% endif %}
+  {% if c == "constants" %}{% capture signature %}{{ item.name }} : {{ item.type }} : {{ item.value }};{% endcapture %}{% endif %}
+  {% if c == "procedures" %}
+    {% assign parameters = '' %}
+    {% for p in item.parameters %}{% assign parameters = parameters | append: p.name | append: ': ' | append: p.type %}{% unless forloop.last %}{% assign parameters = parameters | append: ', ' %}{% endunless %}{% endfor %}
+    {% capture value %}{% if item.value and item.value.size > 0 %} -> {{ item.value | join: ', ' }}{% endif %}{% endcapture %}
+    {% capture directives %}{% if item.is_foreign %} #foreign{% endif %}{% endcapture %}
+    {% capture signature %}{{ item.name }} :: ({{ parameters }}){{ value }}{{ directives }};{% endcapture %}
+  {% endif %}
+
+  <div class="details">
+  <h4 id="details-{{ item.name }}" class="ui very tight secondary header">{{ item.name }}{% if is_proc %}(){% endif %}{{ deprecated }}{{ foreign }}</h4>
+  {% if item.declaration %}<span class="smaller text"><i>Declared in:</i> {{ item.declaration }}</span>{% endif %}
+
+  <pre class="highlight"><code>{{ signature }}</code></pre>
+  {{ item.description | markdownify }}
+
+  {% if item.examples %}{% for e in item.examples %}
+    {% assign example_file = e.file %}
+    {% capture example %}{% include collapsible_example.liquid file=example_file syntax='cpp' %}{% endcapture %}{{ example }}
+  {% endfor %}{% endif %}
+
+  {% if item.tags %}{% capture see_also %}{% include see_also.liquid module_root=module_root base_module=base_module tags=item.tags %}{% endcapture %}{{ see_also }}{% endif %}
+  {% if item.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=item.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
+
+  {% if is_proc and item.parameters and item.parameters.size > 0 %}
+  <table class="ui striped definition table"><tbody>
+  {% for p in item.parameters %}
+    {% capture p_sig %}{% include parameter_signature.liquid param=p base_url=include.base_url %}{% endcapture %}
+    {% capture optional %}{% if p.default_value or p.is_var_args %}<div class="ui horizontal label">optional</div>&nbsp;{% endif %}{% endcapture %}
+    <tr><td class="collapsing"><code>{{ p_sig | rstrip }}</code></td><td>{{ optional }}{% if p.description %}{{ p.description | markdownify | remove: '<p>' | remove: '</p>' }}{% endif %}</td></tr>
+  {% endfor %}
+  </tbody></table>
+  {% endif %}
+  </div>
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+
+
+<div id="scroll-space">
+  {% for n in (1..10) %}
+  <p>&nbsp;</p>
+  {% endfor %}
+</div>

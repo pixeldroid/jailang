@@ -3,7 +3,7 @@
 > unofficial documentation of the jai programming language <br>
 > https://pixeldroid.github.io/jailang/
 
-Jai is a computer programming language being developed by Jonathan Blow and team at [Thekla, Inc.][thekla-web].
+Jai is a computer programming language being developed by Jonathan Blow and team at [Thekla, Inc.][thekla-web]
 
 This site attempts to form a searchable language reference out of the hours and hours of video information presented by Jonathan Blow on his youtube channel: [A Programming Language for Games].
 

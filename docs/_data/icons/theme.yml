@@ -1,11 +1,12 @@
 ##
 ##  SVG icon data file for the programming pages theme
 ##
-##  retrieve via liquid: {% site.data.icons_template[<id>] %}
 ##  each icon has the following properties:
 ##    - viewbox
 ##    - path
 ##
+##  to embed via the icon macro: {% include icon.liquid id='<id>' %}
+##  to retrieve this data directly via liquid: {% site.data.icons.theme[<id>] %}
 
 
 # Glyphicon Halflings in Bootstrap by Jan Kovařík - http://getbootstrap.com/components/#glyphicons
@@ -52,7 +53,9 @@ interface: # fa: neuter
 magnifier: # fa: search
   viewbox: '0 0 1664 1664'
   path: 'M1152 704q0-185-131.5-316.5T704 256 387.5 387.5 256 704t131.5 316.5T704 1152t316.5-131.5T1152 704zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225T0 704t55.5-273.5 150-225 225-150T704 0t273.5 55.5 225 150 150 225T1408 704q0 220-124 399l343 343q37 37 37 90z'
-
+plus-square-outline: # fa plus-square-o
+  viewbox: '0 0 1408 1408'
+  path: 'M1152 672v64q0 14-9 23t-23 9H768v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23V768H288q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352V288q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448V288q0-66-47-113t-113-47H288q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5T1120 1408H288q-119 0-203.5-84.5T0 1120V288Q0 169 84.5 84.5T288 0h832q119 0 203.5 84.5T1408 288z'
 
 # Entypo pictograms by Daniel Bruce — www.entypo.com
 # License - http://creativecommons.org/licenses/by-sa/4.0/ (CC BY-SA 4.0)

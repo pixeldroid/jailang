@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Reporting Issues and Contributing
+order: -2
 ---
 
 # {{ page.title }}

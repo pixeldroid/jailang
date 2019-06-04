@@ -1,0 +1,151 @@
+---
+layout: page
+---
+
+{% assign page_url_pieces = page.url | split: '/' %}
+{% assign module_root = page_url_pieces[1] | prepend: '/' %}
+{% capture module_url %}{{ site.baseurl }}{{ module_root }}{% endcapture %}
+{% capture page_module_url %}{{ module_url }}/{{ page.module | split: '.' | join: '/' }}{% endcapture %}
+{% assign constructs = "constants|fields" | split: '|'  %}
+
+
+<h1 id="heading" class="ui dividing header">{{ page.title }}</h1>
+
+<div class="ui list">
+  <div class="item">
+    {% include icon.liquid id='package' %}
+    <div class="content"><a href="{{ site.baseurl }}{{ module_root }}/{{ page.module }}/#{{ module_root }}">{{ page.module }}</a></div>
+  </div>
+  <div class="item">
+    {% include icon.liquid id='datatype' %}
+    <div class="content">{{ page.type_attributes | join: ' ' }} {{ page.type }}</div>
+  </div>
+  {% if page.using %}
+  <div class="item">
+    {% include icon.liquid id='composition' %}
+    <div class="content">
+      <div class="ui breadcrumb">
+        <span class="section active">{{ page.title }}</span>
+        {% if page.using and page.using.size > 0 %}{% include icon.liquid id='chevron-left' class='divider' %}{% endif %}
+        {% for subtype in page.using %}
+        {% assign module = subtype.module | append: '.' | append: subtype.name %}
+        {% include module_linker.liquid module=module html_class='section' base_url=site.baseurl module_root=module_root %}
+        {% unless forloop.last %},&nbsp;{% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if page.used_by %}
+  <div class="item">
+    {% include icon.liquid id='usage' %}
+    <div class="content">
+      <div class="ui breadcrumb">
+        <span class="section active">{{ page.title }}</span>
+        {% if page.used_by and page.used_by.size > 0 %}{% include icon.liquid id='chevron-right' class='divider' %}{% endif %}
+        {% for subtype in page.used_by %}
+        {% assign module = subtype.module | append: '.' | append: subtype.name %}
+        {% include module_linker.liquid module=module html_class='section' base_url=site.baseurl module_root=module_root %}
+        {% unless forloop.last %},&nbsp;{% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<h3 id="description" class="ui header">{{ page.type | capitalize }} Description</h3>
+{% capture description %}{{ page.description }}{% endcapture %}
+{{ description | replace: '   ⇥', '⇥' | replace: '⇥', site.code_indent | markdownify }}
+{% assign base_module_composite = page.module | append: '.' | append: page.title %}
+
+{% if page.tags %}{% include see_also.liquid module_root=module_root base_module=base_module_composite tags=page.tags heading=3 %}{% endif %}
+{% if page.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=page.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
+{% if page.examples %}<h3 class="ui grey tight sub header">Examples</h3>
+<div class="ui horizontal divided list">
+{% for e in page.examples %}
+  {% assign example_file = e.file %}
+  {% capture example_id %}{% include collapsible_example.liquid file=example_file id_only='true' %}{% endcapture %}
+  <div class="item"><a class="header" href="#{{ example_id }}">{{ e.name }}</a></div>
+{% endfor %}
+</div>
+{% endif %}
+
+
+<h2 id="listing" class="ui dividing header">Listing</h2>
+
+<div class="ui horizontal divided list">
+{% for c in constructs %}
+  {% if page[c] %}
+  <div class="item"><a class="header" href="#listing-{{ c }}">{{ c }}</a></div>
+  {% endif %}
+{% endfor %}
+</div>
+
+{% for c in constructs %}
+{% if page[c] %}
+<h3 id="listing-{{ c }}" class="ui tight header">{{ c | capitalize }}</h3>
+{% assign list = page[c] %}
+
+<table class="ui striped definition table"><tbody>
+{% for item in list %}
+  {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
+  {% capture href %}#details-{{ item.name }}{% endcapture %}
+  {% assign d_lines = item.description | newline_to_br | split: '<br />' %}
+  {% assign value = '' %}
+  {% if c == "fields" %}{% assign value = item.default_value %}{% endif %}
+  {% if c == "constants" %}{% assign value = item.value %}{% endif %}
+  <tr>
+    <td{% if forloop.first %} class="collapsing"{% endif %}><a href="{{ href }}">{{ item.name }}</a></td>
+    <td{% if forloop.first %} class="collapsing"{% endif %}>{% if value.size > 0 %}<code>{{ value }}</code>{% endif %}</td>
+    <td>{{ deprecated }}{{ d_lines | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</td>
+  </tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+{% endfor %}
+
+
+<h2 id="details" class="ui dividing header">Details</h2>
+
+{% for c in constructs %}
+{% if page[c] %}
+<h3 id="details-{{ c }}" class="ui tight header">{{ c | capitalize }}</h3>
+{% assign list = page[c] %}
+{% for item in list %}
+  {% assign signature = item.name %}
+  {% capture deprecated %}{% assign d_tags = item.tags | where_exp:"t", "t.name == 'deprecated'" %}{% if d_tags.size > 0 %}<div class="ui horizontal orange label">deprecated {{ d_tags.first.value }}</div>{% endif %}{% endcapture %}
+  {% if c == "fields" %}{% capture signature %}{{ item.name }} : {{ item.type }}{% if item.default_value %} = {{ item.default_value }}{% endif %};{% endcapture %}{% endif %}
+  {% if c == "constants" %}{% capture signature %}{{ item.name }} : {{ item.type }} : {{ item.value }};{% endcapture %}{% endif %}
+
+  <div class="details">
+  <h4 id="details-{{ item.name }}" class="ui very tight secondary header">{{ item.name }}{{ deprecated }}</h4>
+  {% if item.declaration %}<span class="smaller text"><i>Declared in:</i> {{ item.declaration }}</span>{% endif %}
+
+  <pre class="highlight"><code>{{ signature }}</code></pre>
+  {{ item.description | markdownify }}
+
+  {% if item.tags %}{% capture see_also %}{% include see_also.liquid module_root=module_root base_module=page.module tags=item.tags %}{% endcapture %}{{ see_also }}{% endif %}
+  {% if item.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=item.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
+  </div>
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+
+{% if page.examples %}
+<h2 id="examples" class="ui dividing header">Examples</h2>
+
+{% for e in page.examples %}
+  {% assign example_file = e.file %}
+  {% capture example %}{% include collapsible_example.liquid file=example_file syntax='cpp' %}{% endcapture %}{{ example }}
+{% endfor %}
+{% endif %}
+
+
+
+<div id="scroll-space">
+  {% for n in (1..10) %}
+  <p>&nbsp;</p>
+  {% endfor %}
+</div>

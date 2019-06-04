@@ -3,22 +3,22 @@ project:
   name: jailang
   owner: pixeldroid
   repo: https://github.com/pixeldroid/jailang
-  version: 2
+  version: '3'
 collections:
   overview:
     output: true
     permalink: "/:collection/:path/"
     title: Overview
     tab-order: 1
-  features:
+  reference:
     output: true
     permalink: "/:collection/:path/"
-    title: Features
+    title: Reference
     tab-order: 2
-  stdlib:
+  modules:
     output: true
     permalink: "/:collection/:path/"
-    title: StdLib
+    title: Modules
     tab-order: 3
   examples:
     output: true
@@ -29,6 +29,7 @@ code_indent: "  "
 highlighter: rouge
 include:
 - "#*.md"
+- "_*.md" # built-in types, fields, and procedures start with underscore
 kramdown:
   footnote_backlink: '⮌'
 permalink: pretty
@@ -37,4 +38,5 @@ sass:
 plugins:
 - jemoji
 - jekyll-remote-theme
+#theme: programming-pages
 remote_theme: pixeldroid/programming-pages

@@ -102,7 +102,7 @@ footnotes:
 # {{ page.title }}
 
 **_the goal &raquo;_** a new language&mdash;to replace the current defacto standard of C++&mdash;that is not a &lsquo;big agenda&rsquo; language, but a working person's language. [^working-persons-language]
-{:.larger.text}
+{:.ui.huge.message}
 
 - TOC
 {::options toc_levels="2,3" /}

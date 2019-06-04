@@ -1,0 +1,48 @@
+{%- comment -%}
+
+module_has_link
+  checks documents in the module_root collection for a url attribute that matches include.module_url
+
+params:
+  module_url="/api/foo/bar/Baz"
+
+returns:
+  'true' when document for module url is found
+  'false' when no document can be found
+
+{%- endcomment -%}
+
+{%- comment -%}push prior state{%- endcomment -%}
+{%- assign __u = u -%}
+{%- assign __found = found -%}
+{%- assign __url_pieces = url_pieces -%}
+{%- assign __api_collection = api_collection -%}
+{%- assign __api_docs = api_docs -%}
+{%- assign __u1 = u1 -%}
+
+{%- assign u = include.module_url -%}
+{%- assign found = false -%}
+{%- assign url_pieces = u | split: '/' -%}
+{%- assign api_collection = url_pieces[1] -%}
+{%- assign api_docs = site.documents | where:"collection",api_collection -%}
+
+{%- for doc in api_docs -%}
+  {%- if u == doc.url -%}
+    {%- assign found = true -%}
+    {%- break -%}
+  {%- endif -%}
+  {%- assign u1 = u | append: "/" -%}
+  {%- if u1 == doc.url -%}
+    {%- assign found = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if found -%}true{%- else -%}false{%- endif -%}
+
+{%- comment -%}pop prior state{%- endcomment -%}
+{%- assign u1 = __u1 -%}
+{%- assign api_docs = __api_docs -%}
+{%- assign api_collection = __api_collection -%}
+{%- assign url_pieces = __url_pieces -%}
+{%- assign found = __found -%}
+{%- assign u = __u -%}
