@@ -211,7 +211,7 @@ GEM
       sawyer (~> 0.8.0, >= 0.5.3)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
-    programming-pages (0.5.19)
+    programming-pages (0.5.20)
       github-pages (= 198)
     public_suffix (3.1.0)
     rake (12.3.2)
