@@ -4,10 +4,10 @@ layout: type
 module: Basic
 type: STRUCT
 
-description: "Type info data structure for integers.\n\nAdditional struct description documentation comments."
+description: "Type info data structure for integer numbers.\n\nApplies to integers of all bit sizes."
 fields:
-  - { description: "Bits of memory required to store the integer value.", name: "size_in_bits", type: "u32" }
-  - { description: "`true` when the integer can be negative.", name: "signed", type: "bool" }
+  - { name: "size_in_bits", type: "u32", description: "Bits of memory required to store the numerical value." }
+  - { name: "signed", type: "bool" , description: "`true` when the integer can be negative." }
 using:
   - { module: "Basic", name: "Type_Info" }
 ---
