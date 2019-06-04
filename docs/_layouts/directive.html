@@ -12,17 +12,37 @@ layout: page
 {% capture ref %}[^{{ f.label }}]{% endcapture %}
 {% assign references = references | push: ref %}
 {% endfor %}
-{{ page.invocation }} - {{ page.description }}{{ references | join: " " }}
+{{ page.invocation }} - {{ page.description }}. {{ references | join: " " }}
 
 {% if page.see_also.size > 0 %}
-### See also:
+<h3 class="ui grey tight sub header">See also:</h3>
 {% for ref in page.see_also %}
 {% capture link %}[{{ref.text}}]({{site.baseurl}}{{ref.url}}){% endcapture %}
 - {{ link }}
 {% endfor %}
 {% endif %}
 
+{% if page.examples.size > 0 %}
+<h3 class="ui grey tight sub header">Examples</h3>
+<div class="ui horizontal divided list">
+{% for e in page.examples %}
+  {% assign example_file = e.file %}
+  {% capture example_id %}{% include collapsible_example.liquid file=example_file id_only='true' %}{% endcapture %}
+  <div class="item"><a class="header" href="#{{ example_id }}">{{ e.name }}</a></div>
+{% endfor %}
+</div>
+{% endif %}
+
 {{ page.content }}
+
+{% if page.examples.size > 0 %}
+## Examples:
+{% for e in page.examples %}
+  {% assign example_file = e.file %}
+  {% capture example %}{% include collapsible_example.liquid file=example_file syntax='cpp' %}{% endcapture %}{{ example }}
+{% endfor %}
+{% endif %}
+
 
 {% include footnotes.liquid references=page.footnotes %}
 {% endcapture %}

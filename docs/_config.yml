@@ -29,6 +29,7 @@ code_indent: "  "
 highlighter: rouge
 include:
 - "#*.md"
+- "_*.md" # built-in types, fields, and procedures start with underscore
 kramdown:
   footnote_backlink: '⮌'
 permalink: pretty

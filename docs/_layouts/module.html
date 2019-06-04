@@ -78,7 +78,8 @@ layout: page
   {{ item.description | markdownify }}
 
   {% if item.examples %}{% for e in item.examples %}
-    {% capture example %}{% include collapsible_example.liquid file=e %}{% endcapture %}{{ example }}
+    {% assign example_file = e.file %}
+    {% capture example %}{% include collapsible_example.liquid file=example_file syntax='cpp' %}{% endcapture %}{{ example }}
   {% endfor %}{% endif %}
 
   {% if item.tags %}{% capture see_also %}{% include see_also.liquid module_root=module_root base_module=base_module tags=item.tags %}{% endcapture %}{{ see_also }}{% endif %}

@@ -61,6 +61,15 @@ layout: page
 
 {% if page.tags %}{% include see_also.liquid module_root=module_root base_module=base_module_composite tags=page.tags heading=3 %}{% endif %}
 {% if page.footnotes %}{% capture footnotes %}{% include footnotes.liquid references=page.footnotes reflist_only='true' no_hr='true' %}{% endcapture %}<h3 class="ui grey tight sub header">Video references</h3>{{ footnotes | markdownify }}{% endif %}
+{% if page.examples %}<h3 class="ui grey tight sub header">Examples</h3>
+<div class="ui horizontal divided list">
+{% for e in page.examples %}
+  {% assign example_file = e.file %}
+  {% capture example_id %}{% include collapsible_example.liquid file=example_file id_only='true' %}{% endcapture %}
+  <div class="item"><a class="header" href="#{{ example_id }}">{{ e.name }}</a></div>
+{% endfor %}
+</div>
+{% endif %}
 
 
 <h2 id="listing" class="ui dividing header">Listing</h2>
@@ -122,6 +131,16 @@ layout: page
 {% endfor %}
 {% endif %}
 {% endfor %}
+
+
+{% if page.examples %}
+<h2 id="examples" class="ui dividing header">Examples</h2>
+
+{% for e in page.examples %}
+  {% assign example_file = e.file %}
+  {% capture example %}{% include collapsible_example.liquid file=example_file syntax='cpp' %}{% endcapture %}{{ example }}
+{% endfor %}
+{% endif %}
 
 
 
