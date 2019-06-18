@@ -1,7 +1,7 @@
 ---
 layout: page
 title: break
-category: statement
+category: keyword
 description: exit current loop
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: if
-category: statement
+category: keyword
 description: conditional branch
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: remove
-category: statement
+category: keyword
 description: delete item from container being iterated over
 ---
 
