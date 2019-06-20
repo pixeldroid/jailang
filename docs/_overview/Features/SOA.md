@@ -5,49 +5,49 @@ title: SOA
 footnotes:
  -
     label: class-packing
-    video: demo_20150211
+    video: demo_20150121
     time:  338
     text:  |-
       This packing together of things in memory is part of what makes your game slow, because it has some consequences.
  -
     label: soa-goal
-    video: demo_20150211
+    video: demo_20150121
     time:  578
     text:  |-
       Can we be very fast about memory behavior, about playing well with the cache and very organized about how our data is laid out, and still have high levels of expressivity in our code?
  -
     label: retain-inheritance-composition
-    video: demo_20150211
+    video: demo_20150121
     time:  655
     text:  |-
       Expressing some kind of is-a relationship or has-a relationship
  -
     label: retain-upcasting
-    video: demo_20150211
+    video: demo_20150121
     time:  822
     text:  |-
       C++ lets you call functions with the parameter types of the base class.
  -
     label: retain-downcasting
-    video: demo_20150211
+    video: demo_20150121
     time:  862
     text:  |-
       Virtual functions are about going from the base class up to the derived class.
  -
     label: retain-implicit-this
-    video: demo_20150211
+    video: demo_20150121
     time:  902
     text:  |-
       Some value [in ..] having an implicit this in member functions and you don't have to write extra code all the time.
  -
     label: data-oriented-references
-    video: demo_20150211
+    video: demo_20150121
     time:  968
     text:  |-
       Here are some references in order of approachability about how to structure your program to behave well with respect to memory.
  -
     label: cpus-want-SOA
-    video: demo_20150211
+    video: demo_20150121
     time:  2870
     text:  |-
       A language like C++ basically assumes your data is going to be in a thing called Array of Structures (AOS): [..] When you're trying to put things in memory, they go in an array, and each structure in the array is contiguous, so all the members are laid out in order. But most CPUs don't really want data that way. Most CPUs want things laid out as Structures of Arrays (SOA).
@@ -58,19 +58,19 @@ footnotes:
       In computing, Array of Structures (AoS), Structure of Arrays (SoA) and Array of Structures of Arrays (AoSoA) refer to contrasting ways to arrange a sequence of records in memory, with regard to interleaving, and are of interest in SIMD and SIMT programming.
  -
     label: jai-SOA
-    video: demo_20150211
+    video: demo_20150121
     time:  2927
     text:  |-
       If a language is going to be data-oriented, then it should—for example—be easy to put your data in SOA format.
  -
     label: SOA-faster
-    video: demo_20150211
+    video: demo_20150121
     time:  3515
     text:  |-
       The reason that's faster is because now, in my Entity array, all these flags are going to be next to each other [..] and if you just want to deal with flags, that flags-flags-flags for a long time in memory lets you be very fast.
  -
     label: jai-AOS
-    video: demo_20150211
+    video: demo_20150121
     time:  3679
     text:  |-
       I can make [a struct] that's SOA by default, but if I want an array of them that's AOS (for some reason) I can do that.
@@ -123,7 +123,7 @@ struct Human : public Entity {
 }
 ```
 
-But this design conceit has introduced problems that grow worse with scale [^class-packing]:
+But this design conceit has introduced problems that grow worse with scale: [^class-packing]
 
 * All classes are different sizes
 * Entities can't be allocated contiguously
@@ -137,7 +137,7 @@ And Jai provides the `SOA` keyword to organize data into CPU-friendlier Structur
 
 {% include collapsible_example.liquid file='code/soa_entity_test.jai' syntax='cpp' %}
 
-The `AOS` keyword allows for declaration-specific overrides to retain Array of Structures style packing. [^jai-AOS]
+The `AOS` keyword allows for declaration-specific overrides to retain Array of Structures style packing when the default has been set to Structures of Arrays. [^jai-AOS]
 
 
 [^keyword-using]: See [Reference &gt; Keywords &gt; Using]({{site.baseurl}}/reference/Keywords/using/#/reference/)
