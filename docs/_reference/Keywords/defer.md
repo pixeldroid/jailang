@@ -1,7 +1,7 @@
 ---
 layout: page
 title: defer
-category: statement
+category: keyword
 description: delay execution of statement until end of current scope
 ---
 

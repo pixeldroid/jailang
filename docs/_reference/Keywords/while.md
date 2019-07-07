@@ -1,7 +1,7 @@
 ---
 layout: page
 title: while
-category: statement
+category: keyword
 description: loop until expression is false
 ---
 

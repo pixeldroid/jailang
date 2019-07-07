@@ -1,7 +1,7 @@
 ---
 layout: page
 title: delete
-category: statement
+category: keyword
 description: clear an item from memory
 ---
 

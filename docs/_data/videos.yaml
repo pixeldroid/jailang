@@ -1,7 +1,8 @@
 ##
 ##  Videos referenced in the documentation
 ##    MLA style format: "Title of Video." YouTube, uploaded by Username, Date, URL (without the http://).
-##    from: https://libanswers.snhu.edu/faq/48006
+##    from: https://libanswers.snhu.edu/faq/48006 - video
+##          https://libanswers.snhu.edu/faq/48008 - website
 ##
 
 ideas_20140919:
@@ -34,10 +35,30 @@ demo_20150121:
     “Data-Oriented Demo: SOA, composition.” _YouTube_, uploaded by Jonathan Blow, Jan 21, 2015
   url: https://youtu.be/ZHqFrNyLlpA
 
+demo_20150121_qa:
+  mla: |-
+    “Q&A after Data-Oriented Demo.” _YouTube_, uploaded by Jonathan Blow, Jan 21, 2015
+  url: https://youtu.be/HjyyREM0egw
+
 demo_20150211:
   mla: |-
     “Demo: Run-Time (and Compile-Time) Type Information” _YouTube_, uploaded by Jonathan Blow, Feb 11, 2015
   url: https://youtu.be/JoNkttD_MUs
+
+demo_20150212_qa:
+  mla: |-
+    “Q&A after Run-Time Type Info” _YouTube_, uploaded by Jonathan Blow, Feb 12, 2015
+  url: https://youtu.be/LPWXSXKnmqg
+
+demo_20150310:
+  mla: |-
+    “Arguments and Return Values” _YouTube_, uploaded by Jonathan Blow, Mar 10, 2015
+  url: https://youtu.be/CttIYXCUeVY
+
+demo_20150310_qa:
+  mla: |-
+    “Q&A, Arguments and Return Values” _YouTube_, uploaded by Jonathan Blow, Mar 10, 2015
+  url: https://youtu.be/OdmlCAVUYlM
 
 reboot_2017:
   mla: |-

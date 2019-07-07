@@ -5,10 +5,22 @@ order: 1
 
 footnotes:
  -
+    label: arrays-built-in
+    video: demo_20141210
+    time:  1565
+    text:  |-
+      i don't think you should build every data type into the compiler. Most data types should be defined by your program to be what they want. But some things are very common, so you want them to be very fast, and you want them to compile quickly because you're going to have them all over your program.
+ -
     label: array-declaration
     video: demo_20141210
-    time:  1600
-    text:  .
+    time:  1598
+    text:  |-
+      we have a basic static array (`[N] int`)...dynamic array (`[..] int`)...empty brackets (`array: [] int`) [which is] a pointer to the data `array[]`, and a length value, `array.count`.
+ -
+    label: array-mistake-in-c
+    mla:   C's Biggest Mistake. Walter Bright, Dec 22, 2009
+    url:   http://www.drdobbs.com/architecture-and-design/cs-biggest-mistake/228701625
+    text:  C's biggest mistake is conflating pointers with arrays.
  -
     label: basic-types
     video: demo_20141031
@@ -24,13 +36,13 @@ footnotes:
     video: demo_20141031
     time:  1968
     text:  |-
-        `for`.. `break`, `continue`, `return`.
+      `for`.. `break`, `continue`, `return`.
  -
     label: for-remove
     video: demo_20141210
     time:  2106
     text:  |-
-        the `remove` primitive removes the current element from the array. is inherent in the loop in the way `break` or `continue` are.
+      the `remove` primitive removes the current element from the array. is inherent in the loop in the way `break` or `continue` are.
  -
     label: defer
     video: demo_20141031
@@ -46,7 +58,7 @@ footnotes:
     video: demo_20141210
     time:  1075
     text:  |-
-        every single thing in the language always gets initialized to its default value, which is usually zero unless you specify a different default value. but, for performance reasons, you have the ability to say, "well, actually, let's not initialize this thing."
+      every single thing in the language always gets initialized to its default value, which is usually zero unless you specify a different default value. but, for performance reasons, you have the ability to say, "well, actually, let's not initialize this thing."
  -
     label: enum-declaration
     video: demo_20141031
@@ -72,13 +84,13 @@ footnotes:
     video: demo_20141031
     time:  1265
     text:  |-
-        `new` and `delete` are cleaner than c++.
+      `new` and `delete` are cleaner than c++.
  -
     label: prevent-initialization
     video: demo_20141210
     time:  1238
     text:  |-
-        dash-dash-dash (`---`) means don't initialize this.
+      dash-dash-dash (`---`) means don't initialize this.
  -
     label: pointer-declaration
     video: demo_20141210
@@ -104,6 +116,45 @@ footnotes:
     video: demo_20141031
     time:  1780
     text:  void pointer may have been removed from language since this video.
+ -
+    label: default-arguments
+    video: demo_20150310
+    time:  156
+    text:  like what you would see in C when you delcare a procedure, and it's got an argument `a` that's an integer and now you can say it equals `9`, and `b` is an integer and it equals `9`. So just like in C++, for example, if you don't pass those arguments, then you'll get those default values.
+ -
+    label: named-arguments
+    video: demo_20150310
+    time:  212
+    text:  named arguments are useful when you have a function with a whole lot of arguments and the arguments are sometimes of the same type as each other, and so the type checker isn't going to catch you if you pass them in the wrong order, or you accidentally forget one, or there's some default arguments at the end. If you don't have default arguments in your language it's less of a problem [..] so if you have default arguments, then I think you want named arguments.
+ -
+    label: multiple-return-values
+    video: demo_20150310
+    time:  1539
+    text:  |-
+      here's what multiple return values are like. I've got some function `foo :: () -> int, int`. It takes no arguments, and it returns, instead of one int, it returns two ints. It returns `int, int`, and I'm going to `return 3, 5;`. I've got an `int x` and an `int y`, and you can take both values by just saying `x, y = foo();`.
+ -
+    label: default-return-values
+    video: demo_20150310
+    time:  2940
+    text:  you can have default values on your return values, just like with arguments.
+ -
+    label: comma-separated-declarations
+    video: demo_20150310
+    time:  2282
+    text:  |-
+      so ["x comma y equals foo", generalized] gives you comma separated declarations (`x, y, z: float;`).
+ -
+    label: comma-separated-assignments
+    video: demo_20150310
+    time:  2356
+    text:  |-
+      you can do comma-separated expressions on the right-hand side.
+ -
+    label: individual-assignments
+    video: demo_20150310
+    time:  2558
+    text:  |-
+      if it's a single-valued expression on the right-hand side, we individually assign that to all variables.
 
 ---
 
@@ -139,11 +190,15 @@ footnotes:
 
 > Use `:` to declare, `=` to assign <br>
 > `name : type = value`
+> `name1, name2 : type = value`
 
 - `f : float;` Declares `f`, explicitly typed to `float` (default value is `0`)[^default-values]
-- `f : float = 1;` Declares and initializes `f`
+- `x, y, z : float;` Declares `x`, `y`, and `z` explicitly as floats with default value `0`. [^comma-separated-declarations]
+- `f : int = 1;` Declares and initializes `f`
+- `f, g, h : int = 3;` Assigns `3` to each of `f`, `g`, and `h`. [^individual-assignments]
 - `f := 1;` Declares and initializes `f`, implicitly typed
-- `f = 1;` Assigns `f`, must already be declared
+- `f = 1;` Assigns `f` or generates error if not already declared
+- `f, g = 1, 2;` Assigns `1` to `f` and `2` to `g` or generates error if either not already declared. [^comma-separated-assignments]
 - `c := 'c` - single quote for characters (`u8` literals)  {% comment %} # FIXME: is this still in? see: https://youtu.be/UTqZNujQOlA?t=1936 {% endcomment %}
 
 ### Pointers and Addresses
@@ -160,10 +215,10 @@ owned : node *! = null;
 other : node *  = *graph.node;
 ```
 
-### Arrays [^array-declaration]
+### Arrays
 
-> Provide static size allocations in square brackets: `[3]` <br>
-> Use two periods to create a dynamically sized array: `[..]` <br>
+> Provide static size allocations in square brackets[^array-declaration]: `[3]` <br>
+> Use two periods to create a dynamically sized array[^array-declaration]: `[..]` <br>
 > Array indices are zero-based (the first element is at index `0`). <br>
 > _see also: [Iteration](#iteration)_.
 
@@ -173,11 +228,13 @@ b: [..] int; // A dynamic array of integers
 print("size of array: %", a.count);
 ```
 
+Arrays are a datatype built into the compiler, to improve performance and avoid some of the errors common in C. [^arrays-built-in] [^array-mistake-in-c]
+
 ### Structs
 
 ```cpp
 Vector3 :: struct {
-    x: float;
+    x: float; // could also write:  x, y, z: float;
     y: float;
     z: float;
 }
@@ -248,25 +305,38 @@ y = cast(My_Enum.VALUE_THREE, My_Enum.loose);
 #### Named Function
 
 ```cpp
-square := (x: float) -> float { return x * x; };
-     f := (x: float) -> float [y] { return x * x + y; };
+square :: (x: float) -> float { return x * x; };
+     f :: (x: float) -> float [y] { return x * x + y; };
 
-process_array := (float array[], (x: float) -> float) {
+process_array :: (float array[], (x: float) -> float) {
     /* use 2nd arg (proc) to modify 1st (array) */
 }
+```
+
+Functions also support default arguments [^default-arguments], named arguments [^named-arguments], multiple return values [^multiple-return-values], and default return values [^default-return-values]
+
+#### Default Arguments
+
+```cpp
+defaults :: (a: int = 9, b: int = -9) { printf("a is %d;\nb is %d.\n", a, b); };
 ```
 
 #### Named Arguments
 
 ```cpp
-some_function(arg1, arg2, x: float) -> float { return x * x; };
+{% include code/named_arguments.jai %}
 ```
 
 #### Multiple Return Values
 
 ```cpp
-answer, error := ???;
+{% include code/multiple_return_values.jai %}
+```
 
+#### Default Return Values
+
+```cpp
+{% include code/default_return_values.jai %}
 ```
 
 ## Initialization

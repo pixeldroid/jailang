@@ -1,7 +1,7 @@
 ---
 layout: page
 title: for
-category: statement
+category: keyword
 description: loop over a range
 ---
 

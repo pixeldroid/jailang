@@ -1,7 +1,7 @@
 ---
 layout: page
 title: new
-category: statement
+category: keyword
 description: initialize a struct
 ---
 

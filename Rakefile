@@ -46,6 +46,10 @@ def jekyll_cmd(verb)
   "bundle exec jekyll #{verb} --source #{docs_dir} --layouts #{docs_dir}/_layouts"
 end
 
+def jekyll_profile
+  jekyll_cmd('build --profile')
+end
+
 def jekyll_build
   jekyll_cmd('build')
 end
@@ -119,6 +123,21 @@ task :docs do |t, args|
   rescue Exception => e # capture interrupt signal from the process
     puts ' (stop)'
   end
+end
+
+
+desc [
+  "calls jekyll to build with profiling on, saves output to file",
+  "  cmd: #{jekyll_profile}",
+].join("\n")
+task :prof do |t, args|
+  file = "#{Time.now.strftime('%Y%m%d%H%M%S')}.prof"
+  cmd = "#{jekyll_profile} > #{file}"
+
+  puts cmd
+  system(cmd)
+
+  puts "[#{t.name}] task completed, data written to '#{file}'"
 end
 
 desc [

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: any
+title: Any
 category: type
 description: a more informative and type-safe version of `void` pointer.\n\nIncludes a type pointer for the type and a void pointer for the value.
 
