@@ -42,7 +42,7 @@ Jai is designed to _**not**_ include the following:
 
 - header files [^no-header-files]
 - garbage collection [^no-garbage-collection]
-- exceptions [^no-exceptions]  _(see Multiple return values instead)_{:.smaller.text}
+- exceptions [^no-exceptions]  _(see [Default return values] instead)_{:.smaller.text}
 - a preprocessor [^no-preprocessor]  _([directives] are part of the language)_{:.smaller.text}
 - smart pointers [^no-smart-pointers]  _(see [Memory management] instead)_{:.smaller.text}
 - template metaprogramming [^no-template-metaprogamming]  _(see Polymorphism instead)_{:.smaller.text}
@@ -51,5 +51,6 @@ Jai is designed to _**not**_ include the following:
 
 {% include footnotes.liquid references=page.footnotes %}
 
+[Default return values]: {{site.baseurl}}/overview/Features/Default-return-values/#/overview/
 [directives]: {{site.baseurl}}/overview/Features/Directives/#/overview/ "There is no preprocessor for Jai; directives are just part of the language"
 [Memory management]: {{site.baseurl}}/overview/Features/Memory-management/#/features/ "The language design focuses on making it easier to manage memory"
