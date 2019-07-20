@@ -44,18 +44,57 @@ procedures:
   name: add_build_file
   parameters: [ { name: filename, type: string, description: "name of file to be added to compilation project" } ]
   is_foreign: true
+  footnotes:
+  - { label: add-build-file, video: demo_20150401, time: 821, text: "video reference." }
 -
-  name: array_unordered_remove
-  parameters: [ { name: array, type: "*[..] $T", description: "description for array" }, { name: item, type: T, description: "description for item" } ]
-  value: [ s64 ]
+  name: add_build_string
+  parameters: [ { name: data, type: string, description: "FIXME: add description" } ]
+  is_foreign: true
+  footnotes:
+  - { label: add-build-string, video: demo_20150401, time: 821, text: "video reference." }
+-
+  name: set_build_file_path
+  parameters: [ { name: filename, type: string, description: "FIXME: add description" } ]
+  is_foreign: true
+  footnotes:
+  - { label: set-build-file-path, video: demo_20150401, time: 821, text: "video reference." }
+-
+  name: update_build_options
+  is_foreign: true
+  footnotes:
+  - { label: update-build-options, video: demo_20150401, time: 821, text: "video reference." }
+-
+  name: array_add
+  parameters: [ { name: array, type: "^[..] $T", description: "array of any type" }, { name: item, type: T, description: "item to add (must be of same type)" } ]
+  is_inline: true
   declaration: Basic.jai
-  description: "Procedure description doc comments first line.\n\nAdditional procedure description documentation comments.\n\nCode sample:\n```cpp\nfor array\n  if it == null return it_index;\n```"
+  description: "appends `item` to `array`, occupying the new highest index slot. Indices are zero-based."
+  footnotes:
+  - { label: array-add, video: demo_20150401, time: 821, text: "video reference." }
 -
   name: array_add_if_unique
-  parameters: [ { name: array, type: "*[..] $T", description: "description for array" }, { name: item, type: T, description: "description for item" } ]
+  parameters: [ { name: array, type: "^[..] $T", description: "FIXME: add description" }, { name: item, type: T, description: "FIXME: add description" } ]
   value: [ bool, s64 ]
   declaration: Basic.jai
-  description: "Procedure description doc comments first line.\n\nAdditional procedure description documentation comments."
+  description: "FIXME: add description. Procedure description doc comments first line.\n\nAdditional procedure description documentation comments."
+  footnotes:
+  - { label: array-add-if-unique, video: demo_20150401, time: 821, text: "video reference." }
+-
+  name: array_unordered_remove
+  parameters: [ { name: array, type: "^[..] $T", description: "FIXME: add description" }, { name: item, type: T, description: "FIXME: add description" } ]
+  value: [ s64 ]
+  declaration: Basic.jai
+  description: "FIXME: add description. Procedure description doc comments first line.\n\nAdditional procedure description documentation comments.\n\nCode sample:\n```cpp\nfor array\n  if it == null return it_index;\n```"
+  footnotes:
+  - { label: array-unordered-remove, video: demo_20150401, time: 821, text: "video reference." }
+-
+  name: array_reserve
+  parameters: [ { name: array, type: "^[..] $T", description: "FIXME: add description" }, { name: count, type: s64, description: "number of slots to pre-allocate for items of type `T`" } ]
+  value: [ s64 ]
+  declaration: Basic.jai
+  description: "FIXME: add description. Procedure description doc comments first line.\n\nAdditional procedure description documentation comments.\n\nCode sample:\n```cpp\nfor array\n  if it == null return it_index;\n```"
+  footnotes:
+  - { label: array-reserve, video: demo_20150401, time: 821, text: "video reference." }
 
 
 enums:
