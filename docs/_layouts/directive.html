@@ -33,7 +33,11 @@ layout: page
 </div>
 {% endif %}
 
+{% assign page_content = page.content | strip_newlines %}
+{% if page_content.size > 0  %}
+## Description
 {{ page.content }}
+{% endif %}
 
 {% if page.examples.size > 0 %}
 ## Examples:

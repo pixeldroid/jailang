@@ -17,7 +17,7 @@ layout: page
   {% if listable %}
   <a class="item" href="{{ site.baseurl }}{{ doc.url }}#/{{ doc.collection | downcase }}/">
     <div class="content">
-      <div class="medium header">{{ doc.title }}</div>
+      <div class="medium header"><tt>{{ doc.title }}</tt></div>
       <div class="description">{{ doc.description | newline_to_br | split: '<br />' | first | rstrip | markdownify | remove: '<p>' | remove: '</p>' }}</div>
     </div>
   </a>

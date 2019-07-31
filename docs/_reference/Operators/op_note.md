@@ -2,6 +2,8 @@
 layout: page
 title: '@'
 category: operator
+description: annotate a declaration
+search_tags: note at
 
 footnotes:
  -

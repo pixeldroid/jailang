@@ -1,4 +1,4 @@
-// from https://youtu.be/ZHqFrNyLlpA?t=3565
+// from: https://youtu.be/ZHqFrNyLlpA?t=3565
 
 Vector3 :: struct {
   x : float = 1;

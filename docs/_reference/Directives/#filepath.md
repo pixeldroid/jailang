@@ -5,8 +5,8 @@ category: directive
 invocation: "`#filepath`"
 description: evaluate to the path of the currently compiling source file
 see_also:
-- { text: "#file", url: "/reference/Directives/%23file/#/stdlib/" }
-- { text: "#line", url: "/reference/Directives/%23line/#/stdlib/" }
+- { text: "#file", url: "/reference/Directives/%23file/#/reference/" }
+- { text: "#line", url: "/reference/Directives/%23line/#/reference/" }
 
 footnotes:
 -

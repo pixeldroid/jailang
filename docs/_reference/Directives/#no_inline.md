@@ -5,7 +5,7 @@ category: directive
 invocation: "`#no_inline <function_name>`"
 description: prevent inlining of `<function_name>`
 see_also:
-- { text: "#inline", url: "/reference/Directives/%23inline/#/stdlib/" }
+- { text: "#inline", url: "/reference/Directives/%23inline/#/reference/" }
 
 footnotes:
 -

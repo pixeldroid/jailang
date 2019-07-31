@@ -2,6 +2,8 @@
 layout: page
 title: ':'
 category: operator
+description: declare a variable; can be paired with assignment
+search_tags: declaration assignment colon
 
 footnotes:
  -
