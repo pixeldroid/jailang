@@ -30,7 +30,7 @@ footnotes:
     text:  we're not afraid of pointers in the game industry. we need to use them.
  -
     label: no-template-metaprogamming
-    text:  'FIXME: find this video reference'
+    text:  'FIXME: find this video reference (https://www.youtube.com/watch?v=BwqeFrlSpuI)'
 
 ---
 
@@ -45,12 +45,13 @@ Jai is designed to _**not**_ include the following:
 - exceptions [^no-exceptions]  _(see [Default return values] instead)_{:.smaller.text}
 - a preprocessor [^no-preprocessor]  _([directives] are part of the language)_{:.smaller.text}
 - smart pointers [^no-smart-pointers]  _(see [Memory management] instead)_{:.smaller.text}
-- template metaprogramming [^no-template-metaprogamming]  _(see Polymorphism instead)_{:.smaller.text}
+- template metaprogramming [^no-template-metaprogamming]  _(see [Polymorphic procedures] instead)_{:.smaller.text}
 {:.larger.text}
 
 
 {% include footnotes.liquid references=page.footnotes %}
 
-[Default return values]: {{site.baseurl}}/overview/Features/Default-return-values/#/overview/
+[Default return values]: {{site.baseurl}}/overview/Features/Default-return-values/#/overview/ "Default return values can provide info to the caller without complicated event heirarchies"
 [directives]: {{site.baseurl}}/overview/Features/Directives/#/overview/ "There is no preprocessor for Jai; directives are just part of the language"
-[Memory management]: {{site.baseurl}}/overview/Features/Memory-management/#/features/ "The language design focuses on making it easier to manage memory"
+[Memory management]: {{site.baseurl}}/overview/Features/Memory-management/#/overview/ "The language design focuses on making it easier to manage memory"
+[Polymorphic procedures]: {{site.baseurl}}/overview/Features/Polymorphic-procedures/#/overview/ "Jai provides a simple, clean syntax for using type variables"
