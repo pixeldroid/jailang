@@ -2,7 +2,9 @@
 layout: page
 title: Any
 category: type
-description: a more informative and type-safe version of `void` pointer.\n\nIncludes a type pointer for the type and a void pointer for the value.
+description: |-
+  a more informative and type-safe version of `void` pointer.
+  Includes a type pointer for the type and a void pointer for the value.
 
 footnotes:
  -
